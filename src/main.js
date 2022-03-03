@@ -2,50 +2,26 @@ import Vue from 'vue'
 import App from './App.vue'
 import Antd from 'ant-design-vue'
 import 'ant-design-vue/dist/antd.css'
-import VueRouter from 'vue-router'
-import Vuex from 'vuex'
-import Home from "@/components/Home";
-import Login from "@/components/Login";
+import router from './router/index.js'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+import AmapVue from '@amap/amap-vue'
+import store from './store/index.js'
 
-Vue.use(Vuex)
-Vue.use(VueRouter)
-Vue.use(Antd)
+AmapVue.config.key='5736c9c3fbaaae3587afd04a2cc563fd'
+
+Vue.use(VueAxios, axios).use(Antd).use(AmapVue)
 
 Vue.config.productionTip = false
 
-//define routers in vue
-const router = new VueRouter({
-    routes:[
-        {
-            path:'/',
-            component:Login
-        },
-        {
-            path:'/home',
-            component:Home
-        },
-        {
-            path:'/login',
-            component:Login
-        }
-    ]
-})
+//路由守卫 开发时禁用
+// router.beforeEach((to, from, next) => {
+//     if (to.path !== '/login' && !store.state.isLogin) next({path: '/login'})
+//     else next()
+// })
 
-const store = new Vuex.Store({
-    state:{
-        domain:'http://120.77.212.147:9797/',
-        filter:'any',
-        isLogin:false,
-    },
-    mutations:{
-        setFilter(state,filter){
-            state.filter = filter
-        },
-        setIsLogin(state,isLogin){
-            state.isLogin = isLogin
-        }
-    }
-})
+
+axios.defaults.baseURL = store.getters.getDomain
 
 new Vue({
     render: h => h(App),
