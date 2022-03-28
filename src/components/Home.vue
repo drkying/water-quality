@@ -34,556 +34,567 @@
             </div>
           </div>
         </div>
-
         <div class="toggel-box">
           <div class="toggel">设备地图</div>
-          <div class="toggel">报警管理</div>
+          <div class="toggel" @click="this.$router.push('/deviceManage')">报警管理</div>
         </div>
       </div>
       <div class="main-right">
         <devices-status/>
         <div class="right-middle">
-          <div class="divce-list">
-            <div class="divce-title">
-              设备001
-            </div>
-            <div class="params-list">
-              <div class="params">
-                <span class="a">COD</span>
-                <span class="b" style="color: #E55C17;">10.88</span>
-                <span class="c" style="background-color: #E55C17;">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">氨氮</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">ZD</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">YL</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">DOM</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">TOC</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">TDS</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">TEM</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">PH</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">溶解氧</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">SW</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">DD</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-            </div>
-            <div class="divce-sub-title">
-              油污检测参数
-            </div>
-            <div class="sub-params-list">
-              <div class="sub-param">
-                <span class="sub-a">油污种类</span>
-                <span class="sub-b">暂无</span>
-                <span class="sub-c"></span>
-              </div>
-              <div class="sub-param">
-                <span class="sub-a">油厚度</span>
-                <span class="sub-b">0.23</span>
-                <span class="sub-c">查看曲线</span>
-              </div>
-              <div class="sub-param">
-                <span class="sub-a">油强度</span>
-                <span class="sub-b">0.23</span>
-                <span class="sub-c">查看曲线</span>
-              </div>
-            </div>
-            <div class="bottom-dic">
-              仪器参数
-            </div>
+          <div v-for="item in devices.slice(0,6)" :key="item.id"
+               class="divce-list"
+          >
+            <device-card
+                :device="item"
+                :deviceData="deviceData[item.id]"
+            />
           </div>
+          <!--          <device-card-->
+          <!--              :device="devices[0]"-->
+          <!--              :deviceData="deviceData[devices[0].id]"-->
+          <!--          />-->
+          <!--          <div class="divce-list">-->
+          <!--            <div class="divce-title">-->
+          <!--              设备001-->
+          <!--            </div>-->
+          <!--            <div class="params-list">-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">COD</span>-->
+          <!--                <span class="b" style="color: #E55C17;">10.88</span>-->
+          <!--                <span class="c" style="background-color: #E55C17;">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">氨氮</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">ZD</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">YL</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">DOM</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">TOC</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">TDS</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">TEM</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">PH</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">溶解氧</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">SW</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">DD</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--            </div>-->
+          <!--            <div class="divce-sub-title">-->
+          <!--              油污检测参数-->
+          <!--            </div>-->
+          <!--            <div class="sub-params-list">-->
+          <!--              <div class="sub-param">-->
+          <!--                <span class="sub-a">油污种类</span>-->
+          <!--                <span class="sub-b">暂无</span>-->
+          <!--                <span class="sub-c"></span>-->
+          <!--              </div>-->
+          <!--              <div class="sub-param">-->
+          <!--                <span class="sub-a">油厚度</span>-->
+          <!--                <span class="sub-b">0.23</span>-->
+          <!--                <span class="sub-c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="sub-param">-->
+          <!--                <span class="sub-a">油强度</span>-->
+          <!--                <span class="sub-b">0.23</span>-->
+          <!--                <span class="sub-c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--            </div>-->
+          <!--            <div class="bottom-dic">-->
+          <!--              仪器参数-->
+          <!--            </div>-->
+          <!--          </div>-->
 
-          <div class="divce-list">
-            <div class="divce-title" style="background-color: #1BA46E;">
-              设备002
-            </div>
-            <div class="params-list">
-              <div class="params">
-                <span class="a">COD</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">氨氮</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">ZD</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">YL</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">DOM</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">TOC</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">TDS</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">TEM</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">PH</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">溶解氧</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">SW</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">DD</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-            </div>
-            <div class="divce-sub-title">
-              油污检测参数
-            </div>
-            <div class="sub-params-list">
-              <div class="sub-param">
-                <span class="sub-a">油污种类</span>
-                <span class="sub-b">暂无</span>
-                <span class="sub-c"></span>
-              </div>
-              <div class="sub-param">
-                <span class="sub-a">油厚度</span>
-                <span class="sub-b">0.23</span>
-                <span class="sub-c">查看曲线</span>
-              </div>
-              <div class="sub-param">
-                <span class="sub-a">油强度</span>
-                <span class="sub-b">0.23</span>
-                <span class="sub-c">查看曲线</span>
-              </div>
-            </div>
-            <div class="bottom-dic">
-              仪器参数
-            </div>
-          </div>
-          <div class="divce-list">
-            <div class="divce-title" style="background-color: #1BA46E;">
-              设备003
-            </div>
-            <div class="params-list">
-              <div class="params">
-                <span class="a">COD</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">氨氮</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">ZD</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">YL</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">DOM</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">TOC</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">TDS</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">TEM</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">PH</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">溶解氧</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">SW</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">DD</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-            </div>
-            <div class="divce-sub-title">
-              油污检测参数
-            </div>
-            <div class="sub-params-list">
-              <div class="sub-param">
-                <span class="sub-a">油污种类</span>
-                <span class="sub-b">暂无</span>
-                <span class="sub-c"></span>
-              </div>
-              <div class="sub-param">
-                <span class="sub-a">油厚度</span>
-                <span class="sub-b">0.23</span>
-                <span class="sub-c">查看曲线</span>
-              </div>
-              <div class="sub-param">
-                <span class="sub-a">油强度</span>
-                <span class="sub-b">0.23</span>
-                <span class="sub-c">查看曲线</span>
-              </div>
-            </div>
-            <div class="bottom-dic">
-              仪器参数
-            </div>
-          </div>
-          <div class="divce-list list4">
-            <div class="divce-title" style="background-color: #1A4A9C;">
-              设备004
-            </div>
-            <div class="params-list">
-              <div class="params">
-                <span class="a">COD</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">氨氮</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">ZD</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">YL</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">DOM</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">TOC</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">TDS</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">TEM</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">PH</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">溶解氧</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">SW</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">DD</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-            </div>
-            <div class="divce-sub-title">
-              油污检测参数
-            </div>
-            <div class="sub-params-list">
-              <div class="sub-param">
-                <span class="sub-a">油污种类</span>
-                <span class="sub-b">暂无</span>
-                <span class="sub-c"></span>
-              </div>
-              <div class="sub-param">
-                <span class="sub-a">油厚度</span>
-                <span class="sub-b">0.23</span>
-                <span class="sub-c">查看曲线</span>
-              </div>
-              <div class="sub-param">
-                <span class="sub-a">油强度</span>
-                <span class="sub-b">0.23</span>
-                <span class="sub-c">查看曲线</span>
-              </div>
-            </div>
-            <div class="bottom-dic">
-              仪器参数
-            </div>
-          </div>
-          <div class="divce-list">
-            <div class="divce-title" style="background-color: #1BA46E;">
-              设备005
-            </div>
-            <div class="params-list">
-              <div class="params">
-                <span class="a">COD</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">氨氮</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">ZD</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">YL</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">DOM</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">TOC</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">TDS</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">TEM</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">PH</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">溶解氧</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">SW</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">DD</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-            </div>
-            <div class="divce-sub-title">
-              油污检测参数
-            </div>
-            <div class="sub-params-list">
-              <div class="sub-param">
-                <span class="sub-a">油污种类</span>
-                <span class="sub-b">暂无</span>
-                <span class="sub-c"></span>
-              </div>
-              <div class="sub-param">
-                <span class="sub-a">油厚度</span>
-                <span class="sub-b">0.23</span>
-                <span class="sub-c">查看曲线</span>
-              </div>
-              <div class="sub-param">
-                <span class="sub-a">油强度</span>
-                <span class="sub-b">0.23</span>
-                <span class="sub-c">查看曲线</span>
-              </div>
-            </div>
-            <div class="bottom-dic">
-              仪器参数
-            </div>
-          </div>
-          <div class="divce-list  list6">
-            <div class="divce-title" style="background-color: #7F7F7F;">
-              设备006
-            </div>
-            <div class="params-list">
-              <div class="params">
-                <span class="a">COD</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">氨氮</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">ZD</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">YL</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">DOM</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">TOC</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">TDS</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">TEM</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">PH</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">溶解氧</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">SW</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-              <div class="params">
-                <span class="a">DD</span>
-                <span class="b">10.88</span>
-                <span class="c">查看曲线</span>
-              </div>
-            </div>
-            <div class="divce-sub-title">
-              油污检测参数
-            </div>
-            <div class="sub-params-list">
-              <div class="sub-param">
-                <span class="sub-a">油污种类</span>
-                <span class="sub-b">暂无</span>
-                <span class="sub-c"></span>
-              </div>
-              <div class="sub-param">
-                <span class="sub-a">油厚度</span>
-                <span class="sub-b">0.23</span>
-                <span class="sub-c">查看曲线</span>
-              </div>
-              <div class="sub-param">
-                <span class="sub-a">油强度</span>
-                <span class="sub-b">0.23</span>
-                <span class="sub-c">查看曲线</span>
-              </div>
-            </div>
-            <div class="bottom-dic">
-              仪器参数
-            </div>
-          </div>
+          <!--          <div class="divce-list">-->
+          <!--            <div class="divce-title" style="background-color: #1BA46E;">-->
+          <!--              设备002-->
+          <!--            </div>-->
+          <!--            <div class="params-list">-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">COD</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">氨氮</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">ZD</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">YL</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">DOM</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">TOC</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">TDS</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">TEM</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">PH</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">溶解氧</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">SW</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">DD</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--            </div>-->
+          <!--            <div class="divce-sub-title">-->
+          <!--              油污检测参数-->
+          <!--            </div>-->
+          <!--            <div class="sub-params-list">-->
+          <!--              <div class="sub-param">-->
+          <!--                <span class="sub-a">油污种类</span>-->
+          <!--                <span class="sub-b">暂无</span>-->
+          <!--                <span class="sub-c"></span>-->
+          <!--              </div>-->
+          <!--              <div class="sub-param">-->
+          <!--                <span class="sub-a">油厚度</span>-->
+          <!--                <span class="sub-b">0.23</span>-->
+          <!--                <span class="sub-c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="sub-param">-->
+          <!--                <span class="sub-a">油强度</span>-->
+          <!--                <span class="sub-b">0.23</span>-->
+          <!--                <span class="sub-c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--            </div>-->
+          <!--            <div class="bottom-dic">-->
+          <!--              仪器参数-->
+          <!--            </div>-->
+          <!--          </div>-->
+          <!--          <div class="divce-list">-->
+          <!--            <div class="divce-title" style="background-color: #1BA46E;">-->
+          <!--              设备003-->
+          <!--            </div>-->
+          <!--            <div class="params-list">-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">COD</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">氨氮</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">ZD</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">YL</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">DOM</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">TOC</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">TDS</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">TEM</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">PH</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">溶解氧</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">SW</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">DD</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--            </div>-->
+          <!--            <div class="divce-sub-title">-->
+          <!--              油污检测参数-->
+          <!--            </div>-->
+          <!--            <div class="sub-params-list">-->
+          <!--              <div class="sub-param">-->
+          <!--                <span class="sub-a">油污种类</span>-->
+          <!--                <span class="sub-b">暂无</span>-->
+          <!--                <span class="sub-c"></span>-->
+          <!--              </div>-->
+          <!--              <div class="sub-param">-->
+          <!--                <span class="sub-a">油厚度</span>-->
+          <!--                <span class="sub-b">0.23</span>-->
+          <!--                <span class="sub-c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="sub-param">-->
+          <!--                <span class="sub-a">油强度</span>-->
+          <!--                <span class="sub-b">0.23</span>-->
+          <!--                <span class="sub-c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--            </div>-->
+          <!--            <div class="bottom-dic">-->
+          <!--              仪器参数-->
+          <!--            </div>-->
+          <!--          </div>-->
+          <!--          <div class="divce-list list4">-->
+          <!--            <div class="divce-title" style="background-color: #1A4A9C;">-->
+          <!--              设备004-->
+          <!--            </div>-->
+          <!--            <div class="params-list">-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">COD</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">氨氮</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">ZD</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">YL</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">DOM</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">TOC</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">TDS</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">TEM</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">PH</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">溶解氧</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">SW</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">DD</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--            </div>-->
+          <!--            <div class="divce-sub-title">-->
+          <!--              油污检测参数-->
+          <!--            </div>-->
+          <!--            <div class="sub-params-list">-->
+          <!--              <div class="sub-param">-->
+          <!--                <span class="sub-a">油污种类</span>-->
+          <!--                <span class="sub-b">暂无</span>-->
+          <!--                <span class="sub-c"></span>-->
+          <!--              </div>-->
+          <!--              <div class="sub-param">-->
+          <!--                <span class="sub-a">油厚度</span>-->
+          <!--                <span class="sub-b">0.23</span>-->
+          <!--                <span class="sub-c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="sub-param">-->
+          <!--                <span class="sub-a">油强度</span>-->
+          <!--                <span class="sub-b">0.23</span>-->
+          <!--                <span class="sub-c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--            </div>-->
+          <!--            <div class="bottom-dic">-->
+          <!--              仪器参数-->
+          <!--            </div>-->
+          <!--          </div>-->
+          <!--          <div class="divce-list">-->
+          <!--            <div class="divce-title" style="background-color: #1BA46E;">-->
+          <!--              设备005-->
+          <!--            </div>-->
+          <!--            <div class="params-list">-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">COD</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">氨氮</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">ZD</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">YL</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">DOM</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">TOC</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">TDS</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">TEM</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">PH</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">溶解氧</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">SW</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">DD</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--            </div>-->
+          <!--            <div class="divce-sub-title">-->
+          <!--              油污检测参数-->
+          <!--            </div>-->
+          <!--            <div class="sub-params-list">-->
+          <!--              <div class="sub-param">-->
+          <!--                <span class="sub-a">油污种类</span>-->
+          <!--                <span class="sub-b">暂无</span>-->
+          <!--                <span class="sub-c"></span>-->
+          <!--              </div>-->
+          <!--              <div class="sub-param">-->
+          <!--                <span class="sub-a">油厚度</span>-->
+          <!--                <span class="sub-b">0.23</span>-->
+          <!--                <span class="sub-c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="sub-param">-->
+          <!--                <span class="sub-a">油强度</span>-->
+          <!--                <span class="sub-b">0.23</span>-->
+          <!--                <span class="sub-c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--            </div>-->
+          <!--            <div class="bottom-dic">-->
+          <!--              仪器参数-->
+          <!--            </div>-->
+          <!--          </div>-->
+          <!--          <div class="divce-list  list6">-->
+          <!--            <div class="divce-title" style="background-color: #7F7F7F;">-->
+          <!--              设备006-->
+          <!--            </div>-->
+          <!--            <div class="params-list">-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">COD</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">氨氮</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">ZD</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">YL</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">DOM</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">TOC</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">TDS</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">TEM</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">PH</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">溶解氧</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">SW</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="params">-->
+          <!--                <span class="a">DD</span>-->
+          <!--                <span class="b">10.88</span>-->
+          <!--                <span class="c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--            </div>-->
+          <!--            <div class="divce-sub-title">-->
+          <!--              油污检测参数-->
+          <!--            </div>-->
+          <!--            <div class="sub-params-list">-->
+          <!--              <div class="sub-param">-->
+          <!--                <span class="sub-a">油污种类</span>-->
+          <!--                <span class="sub-b">暂无</span>-->
+          <!--                <span class="sub-c"></span>-->
+          <!--              </div>-->
+          <!--              <div class="sub-param">-->
+          <!--                <span class="sub-a">油厚度</span>-->
+          <!--                <span class="sub-b">0.23</span>-->
+          <!--                <span class="sub-c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--              <div class="sub-param">-->
+          <!--                <span class="sub-a">油强度</span>-->
+          <!--                <span class="sub-b">0.23</span>-->
+          <!--                <span class="sub-c">查看曲线</span>-->
+          <!--              </div>-->
+          <!--            </div>-->
+          <!--            <div class="bottom-dic">-->
+          <!--              仪器参数-->
+          <!--            </div>-->
+          <!--          </div>-->
         </div>
         <div class="right-bottom">
           <img src="../assets/bottom.jpg" alt="">
@@ -596,13 +607,23 @@
 <script>
 import Header from "@/components/Header";
 import DevicesStatus from "@/components/widget/devicesStatus";
+import DeviceCard from "@/components/widget/deviceCard";
 
 export default {
   name: "Home",
   components: {
+    DeviceCard,
     DevicesStatus,
     Header: Header,
   },
+  computed: {
+    devices() {
+      return this.$store.state.devices;
+    },
+    deviceData() {
+      return this.$store.state.deviceData;
+    },
+  }
 }
 </script>
 
@@ -612,6 +633,7 @@ export default {
 div {
   box-sizing: border-box;
 }
+
 #app {
   display: flex;
   flex-direction: column;
@@ -626,6 +648,7 @@ div {
   align-items: flex-start;
   justify-content: space-between;
 }
+
 .main-left {
   width: 9%;
   height: 100%;
@@ -636,6 +659,7 @@ div {
   align-items: center;
   padding: 8px;
 }
+
 .wrap {
   width: 100%;
   border-radius: 5px;
@@ -645,6 +669,7 @@ div {
   align-items: center;
   padding-top: 10px;
 }
+
 .title {
   font-size: 14px;
   color: #35266d;
@@ -679,10 +704,12 @@ div {
   font-size: 10px;
   transform: scale(0.8);
 }
+
 .toggel-box {
   margin-top: 15px;
   width: 100%;
 }
+
 .toggel {
   width: 100%;
   border-radius: 3px;
@@ -695,6 +722,7 @@ div {
   justify-content: center;
   font-weight: 700;
 }
+
 .main-right {
   flex: 1;
   display: flex;
@@ -715,6 +743,7 @@ div {
   justify-content: flex-start;
   border-radius: 5px;
 }
+
 .status {
   background-color: #424242;
   height: 90%;
@@ -726,6 +755,7 @@ div {
   padding: 5px;
   margin-right: 60px;
 }
+
 .statu-list {
   display: flex;
   align-items: center;
@@ -736,6 +766,7 @@ div {
   margin-right: 100px;
   position: relative;
 }
+
 .point {
   position: absolute;
   content: '';
@@ -778,6 +809,7 @@ div {
   padding: 5px 8px;
   border-radius: 5px;
 }
+
 .divce-title {
   width: 100%;
   border-radius: 5px;
@@ -790,7 +822,6 @@ div {
   margin-bottom: 3px;
   transform: scale(0.9);
 }
-
 .params {
   width: 100%;
   display: flex;
@@ -798,17 +829,21 @@ div {
   justify-content: space-between;
   transform: scale(0.9);
 }
+
 .params span {
   flex: 1;
 }
+
 .a {
   font-weight: 700;
 }
+
 .b {
   color: #1ba46e;
   font-weight: 700;
   font-size: 14px;
 }
+
 .c {
   background-color: #1ba46e;
   border-radius: 1px;
@@ -828,6 +863,7 @@ div {
   margin: 3px 0;
   transform: scale(0.9);
 }
+
 .sub-param {
   display: flex;
   align-items: center;
@@ -838,11 +874,13 @@ div {
 .sub-param span {
   flex: 1;
 }
+
 .sub-b {
   width: 90%;
   color: #1ba46e;
   font-weight: 700;
 }
+
 .sub-c {
   background-color: #1ba46e;
   display: flex;
@@ -850,6 +888,7 @@ div {
   justify-content: center;
   border-radius: 1px;
 }
+
 .bottom-dic {
   width: 80px;
   font-size: 12px;
@@ -862,15 +901,19 @@ div {
 .list4 .b {
   color: #1a4a9c;
 }
+
 .list4 .c {
   background-color: #1a4a9c;
 }
+
 .list4 .divce-sub-title {
   background-color: #1a4a9c;
 }
+
 .list4 .sub-b {
   color: #1a4a9c;
 }
+
 .list4 .sub-c {
   background-color: #1a4a9c;
 }
@@ -878,15 +921,19 @@ div {
 .list6 .b {
   color: #7f7f7f;
 }
+
 .list6 .c {
   background-color: #7f7f7f;
 }
+
 .list6 .divce-sub-title {
   background-color: #7f7f7f;
 }
+
 .list6 .sub-b {
   color: #7f7f7f;
 }
+
 .list6 .sub-c {
   background-color: #7f7f7f;
 }

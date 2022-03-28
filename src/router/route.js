@@ -1,4 +1,3 @@
-
 const routes = [
     {
         path: '/',
@@ -12,6 +11,10 @@ const routes = [
         path: '/login',
         component: () => import('@/components/Login')
     },
+    {
+        path: '/deviceManage',
+        component: () => import('@/components/widget/deviceManage')
+    }
 ]
 
 export default routes;

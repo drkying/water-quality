@@ -7,17 +7,19 @@ import actions from "@/store/actions";
 
 Vue.use(Vuex)
 
-const state= {
+const state = {
     domain: '/api',
     filter: 'any',
     isLogin: false,
+    devices: [],
+    deviceData: {},
+    tempDeviceData: [],
 }
-
 const store = new Vuex.Store({
     state: state,
-    mutations : mutations,
     getters: getters,
-    actions:actions
+    actions: actions,
+    mutations: mutations,
 })
 
 

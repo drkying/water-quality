@@ -5,12 +5,15 @@ import 'ant-design-vue/dist/antd.css'
 import router from './router/index.js'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-import AmapVue from '@amap/amap-vue'
 import store from './store/index.js'
+import AmapVue from '@amap/amap-vue';
 
-AmapVue.config.key='5736c9c3fbaaae3587afd04a2cc563fd'
+//Amap key 5736c9c3fbaaae3587afd04a2cc563fd
 
-Vue.use(VueAxios, axios).use(Antd).use(AmapVue)
+AmapVue.config.key = '5736c9c3fbaaae3587afd04a2cc563fd';
+
+Vue.use(VueAxios, axios).use(Antd).use(AmapVue);
+
 
 Vue.config.productionTip = false
 
@@ -26,5 +29,11 @@ axios.defaults.baseURL = store.getters.getDomain
 new Vue({
     render: h => h(App),
     router,
-    store
+    store,
+    created() {
+        this.$store.dispatch("getDevice").then(() => {
+            this.$store.dispatch("getAllDeviceData").then(() => {
+            });
+        })
+    }
 }).$mount('#app')

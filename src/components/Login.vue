@@ -29,7 +29,7 @@ export default  {
 }
 </script>
 <style>
-access_code {
+.access_code {
   display: flex;
   justify-content: center;
   align-items: center;

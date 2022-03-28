@@ -115,6 +115,7 @@ export default {
   padding: 5px 8px;
   border-radius: 5px;
 }
+
 .divce-title {
   width: 100%;
   border-radius: 5px;
@@ -135,17 +136,21 @@ export default {
   justify-content: space-between;
   transform: scale(0.9);
 }
+
 .params span {
   flex: 1;
 }
+
 .a {
   font-weight: 700;
 }
+
 .b {
   color: #1ba46e;
   font-weight: 700;
   font-size: 14px;
 }
+
 .c {
   background-color: #1ba46e;
   border-radius: 1px;
@@ -165,6 +170,7 @@ export default {
   margin: 3px 0;
   transform: scale(0.9);
 }
+
 .sub-param {
   display: flex;
   align-items: center;
@@ -175,11 +181,13 @@ export default {
 .sub-param span {
   flex: 1;
 }
+
 .sub-b {
   width: 90%;
   color: #1ba46e;
   font-weight: 700;
 }
+
 .sub-c {
   background-color: #1ba46e;
   display: flex;
@@ -187,6 +195,7 @@ export default {
   justify-content: center;
   border-radius: 1px;
 }
+
 .bottom-dic {
   width: 80px;
   font-size: 12px;
