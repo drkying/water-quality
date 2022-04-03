@@ -8,17 +8,22 @@ const data = {
                     device: id
                 }
             }).then(response => {
-                context.commit("setDeviceData", id, response.data.data)
+                console.log(response.data.data);
+                context.commit("setDeviceData", response.data.data)
                 resolve(response.data.data);
             }).catch(error => {
-                context.commit("setDeviceData", id, null)
+                context.commit("setDeviceData", null)
                 reject(error);
             });
         });
     },
     getAllDeviceData(context) {
         for (let i = 0; i < context.state.devices.length; i++) {
-            this.getDeviceDataById(context, context.state.devices[i].id)
+            context.dispatch("getDeviceDataById", context.state.devices[i].id).then(() => {
+                // console.log(r);
+            }).catch(() => {
+                // console.log(e);
+            });
         }
     },
     getDeviceDataHistory(context, id) {

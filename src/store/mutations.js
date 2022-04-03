@@ -1,4 +1,5 @@
 
+
 const mutations = {
     setFilter(state, filter) {
         state.filter = filter
@@ -9,10 +10,12 @@ const mutations = {
     setDevices(state, devices) {
         state.devices = devices
     },
-    setDeviceData(state, id, data) {
-        console.log(id, data)
-        state.deviceData[id] = data
-        console.log(state.deviceData)
+    setDeviceData(state, data) {
+        //console.log(id, data)
+        if (data != null)
+            state.deviceData[data.device] = data
+        // console.log(state.deviceData)
+        //Vue.set(state.deviceData, id, data);
     },
     setTempDeviceData(state, data) {
         state.tempDeviceData = data

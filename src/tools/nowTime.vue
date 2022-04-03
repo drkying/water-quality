@@ -10,12 +10,26 @@ import * as dayjs from "dayjs";
 
 export default {
   name: "nowTime",
-  data () {
+  data() {
     return {
       now_date: dayjs().format('YYYY-MM-DD'),
-      now_time: dayjs().format('HH:mm')
+      now_time: dayjs().format('HH:mm:ss')
     }
   },
+  methods: {
+    updateTime() {
+      this.now_date = dayjs().format('YYYY-MM-DD');
+      this.now_time = dayjs().format('HH:mm:ss');
+    }
+  },
+  created() {
+    this.timer = setInterval(() => {
+      this.updateTime();
+    }, 1000);
+  },
+  beforeDestroy() {
+    clearInterval(this.timer);
+  }
 }
 </script>
 

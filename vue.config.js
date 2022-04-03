@@ -9,7 +9,15 @@ module.exports = {
         pathRewrite: {
           '^/api': ''
         }
+      },
+      '/sms': {
+        target: 'http://146.56.171.243:5000',
+        changeOrigin: true,
+        ws: true,
+        pathRewrite: {
+          '^/sms': ''
+        }
       }
-    }
+    },
   }
 }

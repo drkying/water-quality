@@ -5,96 +5,95 @@
   -->
 <template>
   <div v-if="device">
-    <div class="divce-list">
-      <div class="divce-title">
-        {{ device.name }}
+    <div class="divce-title">
+      {{ device.name }}
+    </div>
+    <div class="params-list">
+      <div class="params">
+        <span class="a">DOM</span>
+        <span class="b" v-if="deviceData.dom">{{ deviceData.dom }}</span>
+        <span class="b" v-else>-1</span>
+        <span class="c">查看曲线</span>
       </div>
-      <div class="params-list">
-        <div class="params" v-if="deviceData.dom">
-          <span class="a">DOM</span>
-          <span class="b">{{ deviceData.dom }}</span>
-          <span class="c">查看曲线</span>
-        </div>
-        <div class="params" v-if="deviceData.zd">
-          <span class="a">ZD</span>
-          <span class="b">{{ deviceData.zd }}</span>
-          <span class="c">查看曲线</span>
-        </div>
-        <div class="params" v-if="deviceData.yl">
-          <span class="a">YL</span>
-          <span class="b">{{ deviceData.yl }}</span>
-          <span class="c">查看曲线</span>
-        </div>
-        <div class="params" v-if="deviceData.cod">
-          <span class="a">COD</span>
-          <span class="b">{{ deviceData.cod }}</span>
-          <span class="c">查看曲线</span>
-        </div>
-        <div class="params" v-if="deviceData.toc">
-          <span class="a">TOC</span>
-          <span class="b">{{ deviceData.toc }}</span>
-          <span class="c">查看曲线</span>
-        </div>
-        <div class="params" v-if="deviceData.tds">
-          <span class="a">TDS</span>
-          <span class="b">{{ deviceData.tds }}</span>
-          <span class="c">查看曲线</span>
-        </div>
-        <div class="params" v-if="deviceData.tem1">
-          <span class="a">TEM1</span>
-          <span class="b">{{ deviceData.tem1 }}</span>
-          <span class="c">查看曲线</span>
-        </div>
-        <div class="params" v-if="deviceData.ph">
-          <span class="a">PH</span>
-          <span class="b">{{ deviceData.ph }}</span>
-          <span class="c">查看曲线</span>
-        </div>
-        <div class="params" v-if="deviceData.an">
-          <span class="a">氨氮</span>
-          <span class="b">{{ deviceData.an }}</span>
-          <span class="c">查看曲线</span>
-        </div>
-        <div class="params" v-if="deviceData._do">
-          <span class="a">溶解氧</span>
-          <span class="b">{{ deviceData._do }}</span>
-          <span class="c">查看曲线</span>
-        </div>
-        <div class="params" v-if="deviceData.sw">
-          <span class="a">SW</span>
-          <span class="b">{{ deviceData.sw }}</span>
-          <span class="c">查看曲线</span>
-        </div>
-        <div class="params" v-if="deviceData.dd">
-          <span class="a">DD</span>
-          <span class="b">{{ deviceData.dd }}</span>
-          <span class="c">查看曲线</span>
-        </div>
+      <div class="params" v-if="deviceData.zd">
+        <span class="a">ZD</span>
+        <span class="b">{{ deviceData.zd }}</span>
+        <span class="c">查看曲线</span>
+      </div>
+      <div class="params" v-if="deviceData.yl">
+        <span class="a">YL</span>
+        <span class="b">{{ deviceData.yl }}</span>
+        <span class="c">查看曲线</span>
+      </div>
+      <div class="params" v-if="deviceData.cod">
+        <span class="a">COD</span>
+        <span class="b">{{ deviceData.cod }}</span>
+        <span class="c">查看曲线</span>
+      </div>
+      <div class="params" v-if="deviceData.toc">
+        <span class="a">TOC</span>
+        <span class="b">{{ deviceData.toc }}</span>
+        <span class="c">查看曲线</span>
+      </div>
+      <div class="params" v-if="deviceData.tds">
+        <span class="a">TDS</span>
+        <span class="b">{{ deviceData.tds }}</span>
+        <span class="c">查看曲线</span>
+      </div>
+      <div class="params" v-if="deviceData.tem1">
+        <span class="a">TEM1</span>
+        <span class="b">{{ deviceData.tem1 }}</span>
+        <span class="c">查看曲线</span>
+      </div>
+      <div class="params" v-if="deviceData.ph">
+        <span class="a">PH</span>
+        <span class="b">{{ deviceData.ph }}</span>
+        <span class="c">查看曲线</span>
+      </div>
+      <div class="params" v-if="deviceData.an">
+        <span class="a">氨氮</span>
+        <span class="b">{{ deviceData.an }}</span>
+        <span class="c">查看曲线</span>
+      </div>
+      <div class="params" v-if="deviceData._do">
+        <span class="a">溶解氧</span>
+        <span class="b">{{ deviceData._do }}</span>
+        <span class="c">查看曲线</span>
+      </div>
+      <div class="params" v-if="deviceData.sw">
+        <span class="a">SW</span>
+        <span class="b">{{ deviceData.sw }}</span>
+        <span class="c">查看曲线</span>
+      </div>
+      <div class="params" v-if="deviceData.dd">
+        <span class="a">DD</span>
+        <span class="b">{{ deviceData.dd }}</span>
+        <span class="c">查看曲线</span>
+      </div>
 
+    </div>
+    <div class="divce-sub-title">
+      油污检测参数
+    </div>
+    <div class="sub-params-list">
+      <div class="sub-param">
+        <span class="sub-a">油污种类</span>
+        <span class="sub-b">暂无</span>
+        <span class="sub-c"></span>
       </div>
-      <div class="divce-sub-title">
-        油污检测参数
+      <div class="sub-param" v-if="deviceData.odf">
+        <span class="sub-a">油厚度</span>
+        <span class="sub-b">{{ deviceData.odf }}</span>
+        <span class="sub-c">查看曲线</span>
       </div>
-      <div class="sub-params-list">
-        <div class="sub-param">
-          <span class="sub-a">油污种类</span>
-          <span class="sub-b">暂无</span>
-          <span class="sub-c"></span>
-        </div>
-        <div class="sub-param" v-if="deviceData.odf">
-          <span class="sub-a">油厚度</span>
-          <span class="sub-b">{{ deviceData.odf }}</span>
-          <span class="sub-c">查看曲线</span>
-        </div>
-        <div class="sub-param">
-          <span class="sub-a">油强度</span>
-          <span class="sub-b">0</span>
-          <span class="sub-c">查看曲线</span>
-        </div>
+      <div class="sub-param">
+        <span class="sub-a">油强度</span>
+        <span class="sub-b">0</span>
+        <span class="sub-c">查看曲线</span>
       </div>
-      <div class="bottom-dic">
-        仪器参数
-      </div>
+    </div>
+    <div class="bottom-dic">
+      仪器参数
     </div>
   </div>
 </template>

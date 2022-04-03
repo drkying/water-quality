@@ -14,6 +14,10 @@ const routes = [
     {
         path: '/deviceManage',
         component: () => import('@/components/widget/deviceManage')
+    },
+    {
+        path: '/mapHome',
+        component: () => import('@/components/widget/mapHome')
     }
 ]
 

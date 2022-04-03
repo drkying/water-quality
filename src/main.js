@@ -6,13 +6,11 @@ import router from './router/index.js'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import store from './store/index.js'
-import AmapVue from '@amap/amap-vue';
+import AmapVue from '@amap/amap-vue'
 
-//Amap key 5736c9c3fbaaae3587afd04a2cc563fd
+AmapVue.config.key = '5736c9c3fbaaae3587afd04a2cc563fd'
 
-AmapVue.config.key = '5736c9c3fbaaae3587afd04a2cc563fd';
-
-Vue.use(VueAxios, axios).use(Antd).use(AmapVue);
+Vue.use(VueAxios, axios).use(Antd).use(AmapVue)
 
 
 Vue.config.productionTip = false
