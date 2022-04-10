@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Header/>
+    <Header :father-method="toggle"/>
     <div class="content-bottom">
 
       <div class="main-left">
@@ -9,41 +9,23 @@
             设备列表
           </div>
           <div class="box-list">
-            <div class="box">
-              <div class="big-text">设备001</div>
-              <div class="small-text">代用名001</div>
-            </div>
-            <div class="box" style="background-color: #1BA46E;">
-              <div class="big-text">设备002</div>
-              <div class="small-text">代用名002</div>
-            </div>
-            <div class="box" style="background-color: #1BA46E;">
-              <div class="big-text">设备003</div>
-              <div class="small-text">代用名003</div>
-            </div>
-            <div class="box" style="background-color: #1A4A9C;">
-              <div class="big-text">设备004</div>
-              <div class="small-text">代用名004</div>
-            </div>
-            <div class="box" style="background-color: #1BA46E;">
-              <div class="big-text">设备005</div>
-              <div class="small-text">代用名005</div>
-            </div>
-            <div class="box" style="background-color: #7F7F7F;">
-              <div class="big-text">设备006</div>
-              <div class="small-text">代用名006</div>
+            <div v-for="(device,index) in this.devices" :key="device.id" class="box" :class="whichStatus(device.id)"
+                 @click="changeHomeView(index)">
+              <div class="big-text">{{ device.id }}</div>
+              <div class="small-text">{{ device.name }}</div>
             </div>
           </div>
         </div>
         <div class="toggel-box">
-          <div class="toggel">设备地图</div>
-          <div class="toggel">报警管理</div>
+          <div class="toggel" @click="toggle(1)">设备地图</div>
+          <div class="toggel" @click="toggle(2)">报警管理</div>
+          <div class="toggel" @click="toggle(3)">数据管理</div>
         </div>
       </div>
-      <div class="main-right">
+      <div class="main-right" v-if="isShow===0">
         <devices-status/>
         <div class="right-middle">
-          <div v-for="device in devices.slice(0,6)" :key="device.id"
+          <div v-for="device in showingDevices" :key="device.id"
                class="divce-list"
           >
             <device-card
@@ -57,6 +39,9 @@
           <!--          <img src="../assets/bottom.jpg" alt="">-->
         </div>
       </div>
+      <div class="main-right" v-else-if="isShow===2">
+        <device-manage class="right-bottom"/>
+      </div>
     </div>
   </div>
 </template>
@@ -66,14 +51,46 @@ import Header from "@/components/Header";
 import DevicesStatus from "@/components/widget/devicesStatus";
 import DeviceCard from "@/components/widget/deviceCard";
 import mapHome from "@/components/widget/mapHome";
+import DeviceManage from "@/components/widget/deviceManage";
 
 export default {
   name: "Home",
+  data() {
+    return {
+      isShow: 0,
+      HomeData: [0, 1, 2, 3, 4, 5]
+    };
+  },
   components: {
+    DeviceManage,
     DevicesStatus,
     Header: Header,
     DeviceCard: DeviceCard,
     mapHome: mapHome
+  },
+  methods: {
+    changeHomeView(index) {
+      if (index in this.HomeData)
+        return;
+      let temp = [];
+      temp.push(index);
+      for (let i = 0; i < 5; i++) {
+        temp.push(this.HomeData[i]);
+      }
+      this.HomeData = temp;
+    },
+    toggle(v) {
+      this.isShow = v;
+    },
+    whichStatus(id) {
+      if (id in this.$store.getters.getStoppedDevices) {
+        return 'outline';
+      } else if (this.deviceData[id].alerted) {
+        return 'warning';
+      } else {
+        return 'running'
+      }
+    },
   },
   computed: {
     devices() {
@@ -82,6 +99,16 @@ export default {
     deviceData() {
       return this.$store.state.deviceData;
     },
+    isHome() {
+      return this.$route.path.includes("/home");
+    },
+    showingDevices() {
+      let temp = [];
+      for (let i = 0; i < this.HomeData.length; i++) {
+        temp.push(this.devices[this.HomeData[i]]);
+      }
+      return temp;
+    }
   }
 }
 </script>
@@ -141,6 +168,22 @@ div {
   flex-direction: column;
   align-items: center;
   margin-top: 10px;
+}
+
+.running {
+  background-color: #1BA46E;
+}
+
+.warning {
+  background-color: #E25F17;
+}
+
+.pause {
+  background-color: #1B499E;
+}
+
+.outline {
+  background-color: #787878;
 }
 
 .box {

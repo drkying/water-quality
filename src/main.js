@@ -31,6 +31,7 @@ new Vue({
     created() {
         this.$store.dispatch("getDevice").then(() => {
             this.$store.dispatch("getAllDeviceData").then(() => {
+                this.$store.commit("setIsReady", true)
             });
         })
     }

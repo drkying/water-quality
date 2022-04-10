@@ -18,6 +18,10 @@ const routes = [
     {
         path: '/mapHome',
         component: () => import('@/components/widget/mapHome')
+    },
+    {
+        path: '/sms',
+        component: () => import('@/components/widget/sms')
     }
 ]
 

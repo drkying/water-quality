@@ -1,6 +1,6 @@
 <template>
   <div class="content-header">
-    <div class="logo">
+    <div class="logo" @click="showHome(0)">
       <img src="../assets/logo.jpg" alt="">
     </div>
     <div class="nav">
@@ -27,11 +27,22 @@ export default {
   components: {
     nowTime: nowTime
   },
+  props: {
+    fatherMethod: {
+      type: Function,
+      default: null
+    }
+  },
   methods: {
     doSignOut() {
-      this.$store.commit('setIsLogin',false)
+      this.$store.commit('setIsLogin', false)
       this.$message.info('登出成功')
       this.$router.push('/login')
+    },
+    showHome(v) {
+      if (this.fatherMethod) {
+        this.fatherMethod(v);
+      }
     }
   },
 }

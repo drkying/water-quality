@@ -9,66 +9,125 @@
       {{ device.name }}
     </div>
     <div class="params-list">
-      <div class="params">
+      <div class="params" v-if="deviceData.dom">
         <span class="a">DOM</span>
-        <span class="b" v-if="deviceData.dom">{{ deviceData.dom }}</span>
-        <span class="b" v-else>-1</span>
-        <span class="c">查看曲线</span>
+        <span class="b">{{ deviceData.dom }}</span>
+        <span class="c" @click="showModal(0)">查看曲线</span>
+      </div>
+      <div class="params" v-else>
+        <span class="a">DOM</span>
+        <span class="b">暂无数据</span>
+        <span class="c"></span>
       </div>
       <div class="params" v-if="deviceData.zd">
         <span class="a">ZD</span>
         <span class="b">{{ deviceData.zd }}</span>
-        <span class="c">查看曲线</span>
+        <span class="c" @click="showModal(1)">查看曲线</span>
+      </div>
+      <div class="params" v-else>
+        <span class="a">ZD</span>
+        <span class="b">暂无数据</span>
+        <span class="c"></span>
       </div>
       <div class="params" v-if="deviceData.yl">
         <span class="a">YL</span>
         <span class="b">{{ deviceData.yl }}</span>
-        <span class="c">查看曲线</span>
+        <span class="c" @click="showModal(2)">查看曲线</span>
+      </div>
+      <div class="params" v-else>
+        <span class="a">YL</span>
+        <span class="b">暂无数据</span>
+        <span class="c"></span>
       </div>
       <div class="params" v-if="deviceData.cod">
         <span class="a">COD</span>
         <span class="b">{{ deviceData.cod }}</span>
-        <span class="c">查看曲线</span>
+        <span class="c" @click="showModal(3)">查看曲线</span>
+      </div>
+      <div class="params" v-else>
+        <span class="a">COD</span>
+        <span class="b">暂无数据</span>
+        <span class="c"></span>
       </div>
       <div class="params" v-if="deviceData.toc">
         <span class="a">TOC</span>
         <span class="b">{{ deviceData.toc }}</span>
-        <span class="c">查看曲线</span>
+        <span class="c" @click="showModal(4)">查看曲线</span>
+      </div>
+      <div class="params" v-else>
+        <span class="a">TOC</span>
+        <span class="b">暂无数据</span>
+        <span class="c"></span>
       </div>
       <div class="params" v-if="deviceData.tds">
         <span class="a">TDS</span>
         <span class="b">{{ deviceData.tds }}</span>
-        <span class="c">查看曲线</span>
+        <span class="c" @click="showModal(5)">查看曲线</span>
+      </div>
+      <div class="params" v-else>
+        <span class="a">TDS</span>
+        <span class="b">暂无数据</span>
+        <span class="c"></span>
       </div>
       <div class="params" v-if="deviceData.tem1">
-        <span class="a">TEM1</span>
+        <span class="a">水温</span>
         <span class="b">{{ deviceData.tem1 }}</span>
-        <span class="c">查看曲线</span>
+        <span class="c" @click="showModal(6)">查看曲线</span>
+      </div>
+      <div class="params" v-else>
+        <span class="a">水温</span>
+        <span class="b">暂无数据</span>
+        <span class="c"></span>
       </div>
       <div class="params" v-if="deviceData.ph">
         <span class="a">PH</span>
         <span class="b">{{ deviceData.ph }}</span>
-        <span class="c">查看曲线</span>
+        <span class="c" @click="showModal(7)">查看曲线</span>
+      </div>
+      <div class="params" v-else>
+        <span class="a">PH</span>
+        <span class="b">暂无数据</span>
+        <span class="c"></span>
       </div>
       <div class="params" v-if="deviceData.an">
         <span class="a">氨氮</span>
         <span class="b">{{ deviceData.an }}</span>
-        <span class="c">查看曲线</span>
+        <span class="c" @click="showModal(8)">查看曲线</span>
+      </div>
+      <div class="params" v-else>
+        <span class="a">氨氮</span>
+        <span class="b">暂无数据</span>
+        <span class="c"></span>
       </div>
       <div class="params" v-if="deviceData._do">
         <span class="a">溶解氧</span>
         <span class="b">{{ deviceData._do }}</span>
-        <span class="c">查看曲线</span>
+        <span class="c" @click="showModal(9)">查看曲线</span>
+      </div>
+      <div class="params" v-else>
+        <span class="a">溶解氧</span>
+        <span class="b">暂无数据</span>
+        <span class="c"></span>
       </div>
       <div class="params" v-if="deviceData.sw">
         <span class="a">SW</span>
         <span class="b">{{ deviceData.sw }}</span>
-        <span class="c">查看曲线</span>
+        <span class="c" @click="showModal(10)">查看曲线</span>
+      </div>
+      <div class="params" v-else>
+        <span class="a">SW</span>
+        <span class="b">暂无数据</span>
+        <span class="c"></span>
       </div>
       <div class="params" v-if="deviceData.dd">
         <span class="a">DD</span>
         <span class="b">{{ deviceData.dd }}</span>
-        <span class="c">查看曲线</span>
+        <span class="c" @click="showModal(11)">查看曲线</span>
+      </div>
+      <div class="params" v-else>
+        <span class="a">DD</span>
+        <span class="b">暂无数据</span>
+        <span class="c"></span>
       </div>
 
     </div>
@@ -84,25 +143,43 @@
       <div class="sub-param" v-if="deviceData.odf">
         <span class="sub-a">油厚度</span>
         <span class="sub-b">{{ deviceData.odf }}</span>
-        <span class="sub-c">查看曲线</span>
+        <span class="sub-c" @click="showModal(12)">查看曲线</span>
+      </div>
+      <div class="sub-param" v-else>
+        <span class="sub-a">油厚度</span>
+        <span class="sub-b">暂无数据</span>
+        <span class="sub-c"></span>
       </div>
       <div class="sub-param">
         <span class="sub-a">油强度</span>
-        <span class="sub-b">0</span>
-        <span class="sub-c">查看曲线</span>
+        <span class="sub-b">暂无数据</span>
+        <span class="sub-c"></span>
       </div>
     </div>
     <div class="bottom-dic">
       仪器参数
     </div>
+    <a-modal
+        title="设备数据曲线"
+        :visible="echartsVisible"
+    >
+      <echarts
+          :device-id="this.device.id"
+          :type="type"
+          @cancel="handleCancel"
+          @ok="handleCancel">
+      </echarts>
+    </a-modal>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import Echarts from "@/test/echarts";
 
 export default {
   name: "deviceCard",
+  components: {Echarts},
   props: {
     device: {
       type: Object,
@@ -136,32 +213,36 @@ export default {
       }
     }
   },
+
   data() {
     return {
+      echartsVisible: false,
+      paraTypes: this.$store.getters.getParaTypes,
+      type: '',
       deviceData: {
         "id": null,
         "spectrumWithLaser": "",
         "spectrumBackground": "",
-        "zd": 1.209,
-        "dom": 2.966,
-        "cod": 4.296,
-        "toc": 0.398,
-        "tpn": 0.0,
-        "yl": 0.519,
-        "tds": 0.0,
-        "tem2": 0.0,
-        "tem1": -1.0,
-        "ph": 0.0,
-        "odf": 0.113,
-        "an": -1.0,
-        "sw": -1.0,
-        "dd": 0.0,
-        "oid": 1.018,
-        "_do": -1.0,
-        "_v": 25.7,
-        "_u": 17.0,
-        "_d": 8.0,
-        "_T": 23.4,
+        "zd": "加载中...",
+        "dom": "加载中...",
+        "cod": "加载中...",
+        "toc": "加载中...",
+        "tpn": "加载中...",
+        "yl": "加载中...",
+        "tds": "加载中...",
+        "tem2": "加载中...",
+        "tem1": "加载中...",
+        "ph": "加载中...",
+        "odf": "加载中...",
+        "an": "加载中...",
+        "sw": "加载中...",
+        "dd": "加载中...",
+        "oid": "加载中...",
+        "_do": "加载中...",
+        "_v": "加载中...",
+        "_u": "加载中...",
+        "_d": "加载中...",
+        "_T": "加载中...",
         "device": "108",
         "paramStr": "ZD 1.209# DOM 2.966# COD 4.296# TOC 0.398# YL 0.519# TDS 0.000# TEM1   -1# AN   -1# PH 0.000# OdF 0.113# DOA   -1# SW   -1# DD 0.000# OId 1.018# *v  25.7#*u  17.0#*d   8.0#*T  23.4#",
         "picStatus": "0",
@@ -175,9 +256,12 @@ export default {
     }
   },
   methods: {
-    showDetail() {
-      console.log(this.device)
-      console.log(this.deviceData)
+    showModal(t) {
+      this.echartsVisible = true;
+      this.type = this.paraTypes[t]
+    },
+    handleCancel() {
+      this.echartsVisible = false;
     },
     getDeviceData() {
       axios.get('/water/data/getSpectrum', {
@@ -187,7 +271,6 @@ export default {
       }).then(res => {
         this.deviceData = res.data.data;
       })
-      this.showDetail()
     }
 
   },
@@ -229,7 +312,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #e45a17;
+  background-color: #1BA46E;
   font-weight: 700;
   font-size: 14px;
   margin-bottom: 3px;

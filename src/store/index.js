@@ -11,9 +11,13 @@ const state = {
     domain: '/api',
     filter: 'any',
     isLogin: false,
+    isReady: false,
     devices: [],
     deviceData: {},
     tempDeviceData: [],
+    deviceManageData: [],
+    stoppedDevices: [],
+    paraTypes: ['dom', 'zd', 'yl', 'cod', 'toc', 'tds', 'tem1', 'ph', 'an', '_do', 'sw', 'dd', 'odf'],
 }
 const store = new Vuex.Store({
     state: state,

@@ -1,7 +1,12 @@
 <template>
   <div class="access_code">
     <h1>在 线 水 质 监 测 预 警 系 统</h1>
-    <a-input-password aria-placeholder="请输入授权码" v-model="accesscode" :value="accesscode" @keyup.enter="doLogin"></a-input-password>
+    <a-input-password aria-placeholder="请输入授权码"
+                      v-model="accesscode"
+                      :value="accesscode"
+                      @keyup.enter="doLogin"
+                      style="width: 300px;"
+    ></a-input-password>
     <p>code is: {{ accesscode }}</p>
     <br/>
     <a-button @click="doLogin">确定</a-button>

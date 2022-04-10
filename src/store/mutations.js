@@ -19,7 +19,23 @@ const mutations = {
     },
     setTempDeviceData(state, data) {
         state.tempDeviceData = data
-    }
+    },
+    setDeviceManageData(state, data) {
+        state.deviceManageData = data
+    },
+    setIsReady(state, isReady) {
+        state.isReady = isReady
+    },
+    addStoppedDevice(state, device) {
+        if (device in state.stoppedDevices)
+            return
+        state.stoppedDevices.push(device)
+    },
+    removeStoppedDevice(state, device) {
+        if (!(device in state.stoppedDevices))
+            return
+        state.stoppedDevices.splice(state.stoppedDevices.indexOf(device), 1)
+    },
 }
 
 export default mutations

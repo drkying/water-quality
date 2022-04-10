@@ -8,11 +8,16 @@ const data = {
                     device: id
                 }
             }).then(response => {
-                console.log(response.data.data);
                 context.commit("setDeviceData", response.data.data)
+                if (response.data.data === null) {
+                    context.commit('addStoppedDevice', id)
+                } else {
+                    context.commit('removeStoppedDevice', id)
+                }
                 resolve(response.data.data);
             }).catch(error => {
                 context.commit("setDeviceData", null)
+                context.commit('addStoppedDevice', id)
                 reject(error);
             });
         });
@@ -77,6 +82,24 @@ const device = {
                     resolve(response.data.data)
                 } else {
                     context.commit("setDevices", null)
+                    reject(response.data.data)
+                }
+                return response.data.data
+            });
+        })
+    },
+    requestImage(context, id) {
+        return new Promise((resolve, reject) => {
+            axios.get("/water/device/addPicOrder", {
+                params: {
+                    deviceId: id
+                }
+            }).then(response => {
+                if (response.status === 200) {
+                    // context.commit("setImage", response.data.data)
+                    resolve(response.data.data)
+                } else {
+                    // context.commit("setImage", null)
                     reject(response.data.data)
                 }
                 return response.data.data
