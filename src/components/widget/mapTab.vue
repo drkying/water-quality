@@ -26,7 +26,7 @@ import markerRun from '../../assets/running.png'
 import markerWarn from '../../assets/warning.png'
 
 export default {
-  name: "map1",
+  name: "map",
   data() {
     return {
       zoom: 14,
@@ -48,7 +48,9 @@ export default {
   },
   methods: {
     onClick() {
-      this.$store.dispatch("getDevice").then(() => {
+      this.$store.dispatch("getDevice").then((res) => {
+        console.log(this.$store.state.devices);
+        console.log(res);
       });
     }
   }

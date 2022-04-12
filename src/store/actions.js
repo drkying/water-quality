@@ -47,17 +47,20 @@ const data = {
                     reject(response.data.data)
                 }
                 return response.data.data
+            }).catch(error => {
+                context.commit("setTempDeviceData", null)
+                reject(error);
             });
         })
 
     },
-    getDeviceDataHistoryByDate(context, id, startTime, endTime) {
+    getDeviceDataHistoryByDate(context, data) {
         return new Promise((resolve, reject) => {
             axios.get("/water/data/getSpectrumByDate", {
                 params: {
-                    device: id,
-                    startTime: startTime,
-                    endTime: endTime
+                    device: data.id,
+                    startTime: data.startTime,
+                    endTime: data.endTime
                 }
             }).then(response => {
                 if (response.status === 200) {
@@ -69,6 +72,10 @@ const data = {
                     reject(response.data.data)
                 }
                 return response.data.data
+            }).catch(error => {
+                //context.commit("setDeviceData", id, null)
+                //context.commit("setTempDeviceData", null)
+                reject(error)
             });
         })
     },
@@ -85,6 +92,9 @@ const device = {
                     reject(response.data.data)
                 }
                 return response.data.data
+            }).catch(error => {
+                context.commit("setDevices", null)
+                reject(error);
             });
         })
     },
@@ -103,41 +113,38 @@ const device = {
                     reject(response.data.data)
                 }
                 return response.data.data
+            }).catch(error => {
+                // context.commit("setImage", null)
+                reject(error)
             });
         })
     },
-    setDeviceThreshold(context, id, type, val) {
+    setDeviceThreshold(context, data) {
         return new Promise((resolve, reject) => {
-            axios.post("/water/device/setThreshold", {
-                params: {
-                    device: id,
-                    type: type,
-                    val: val
-                }
-            }).then(response => {
+            axios.post("/water/device/setThreshold?device=" + data.id + "&type=" + data.type + "&val=" + data.val).then(response => {
                 if (response.status === 200) {
                     resolve(response.data)
                 } else {
                     reject(response.data)
                 }
                 return response.data
+            }).catch(error => {
+                reject(error)
             });
         })
     },
-    setDeviceName(context, id, name) {
+    setDeviceName(context, data) {
         return new Promise((resolve, reject) => {
-            axios.post("/water/device/setDeviceName", {
-                params: {
-                    deviceId: id,
-                    name: name
-                }
-            }).then(response => {
+            axios.post("/water/device/setDeviceName?deviceId=" + data.id + "&name=" + data.name).then(response => {
+                console.log(response)
                 if (response.status === 200) {
                     resolve(response.data)
                 } else {
                     reject(response.data)
                 }
                 return response.data
+            }).catch(err => {
+                reject(err)
             });
         })
     },

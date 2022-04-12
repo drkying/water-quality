@@ -39,8 +39,14 @@
           <!--          <img src="../assets/bottom.jpg" alt="">-->
         </div>
       </div>
+      <div class="main-right" v-else-if="isShow===1">
+        <mapTab class="right-bottom"/>
+      </div>
       <div class="main-right" v-else-if="isShow===2">
         <device-manage class="right-bottom"/>
+      </div>
+      <div class="main-right" v-else-if="isShow===3">
+        <data-tab class="right-bottom"/>
       </div>
     </div>
   </div>
@@ -52,6 +58,8 @@ import DevicesStatus from "@/components/widget/devicesStatus";
 import DeviceCard from "@/components/widget/deviceCard";
 import mapHome from "@/components/widget/mapHome";
 import DeviceManage from "@/components/widget/deviceManage";
+import mapTab from "@/components/widget/mapTab";
+import DataTab from "@/components/widget/dataTab";
 
 export default {
   name: "Home",
@@ -62,11 +70,13 @@ export default {
     };
   },
   components: {
+    DataTab,
     DeviceManage,
     DevicesStatus,
     Header: Header,
     DeviceCard: DeviceCard,
-    mapHome: mapHome
+    mapHome: mapHome,
+    mapTab: mapTab
   },
   methods: {
     changeHomeView(index) {

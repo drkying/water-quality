@@ -162,12 +162,13 @@
     <a-modal
         title="设备数据曲线"
         :visible="echartsVisible"
+        @cancel="handleCancel"
+        @ok="handleCancel"
+        destroyOnClose
     >
       <echarts
           :device-id="this.device.id"
-          :type="type"
-          @cancel="handleCancel"
-          @ok="handleCancel">
+          :type="type">
       </echarts>
     </a-modal>
   </div>

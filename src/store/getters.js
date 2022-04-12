@@ -23,6 +23,9 @@ const getters = {
     getParaTypes(state) {
         return state.paraTypes
     },
+    getParaDescribe(state) {
+        return state.paraDescribe
+    },
     getStoppedDevices(state) {
         return state.stoppedDevices
     },

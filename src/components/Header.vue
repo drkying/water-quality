@@ -4,7 +4,7 @@
       <img src="../assets/logo.jpg" alt="">
     </div>
     <div class="nav">
-      <div class="nav-title">
+      <div class="nav-title" @click="showHome(0)">
         在线水质检测预警系统
       </div>
       <div class="nav-down">
