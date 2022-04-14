@@ -121,7 +121,7 @@ const device = {
     },
     setDeviceThreshold(context, data) {
         return new Promise((resolve, reject) => {
-            axios.post("/water/device/setThreshold?device=" + data.id + "&type=" + data.type + "&val=" + data.val).then(response => {
+            axios.post("/water/device/setThreshold?deviceId=" + data.id + "&type=" + data.type + "&val=" + data.value).then(response => {
                 if (response.status === 200) {
                     resolve(response.data)
                 } else {

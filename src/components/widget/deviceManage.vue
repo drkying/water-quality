@@ -54,7 +54,7 @@
 
 <script>
 export default {
-  name: "deviceManage",
+  name: "tableT",
   data() {
     return {
       modalTitle: '',
@@ -79,6 +79,7 @@ export default {
       for (let i = 0; i < devices.length; i++) {
         let tempObj = {}
         let id = devices[i].id
+        if (id in this.$store.getters.getStoppedDevices) continue
         // if (id === '130' || id === '222') continue
         tempObj.id = devices[i].id
         tempObj.name = devices[i].name
@@ -181,6 +182,7 @@ export default {
           type: this.editingType,
           value: this.modalValue
         }
+        //console.log(data)
         this.$store.dispatch('setDeviceThreshold', data).then(() => {
           this.visible = '';
           this.confirmLoading = false;
@@ -189,7 +191,7 @@ export default {
           this.updateData(data)
         }).catch(() => {
           this.visible = '';
-          this.confirmLoadingTh = false;
+          this.confirmLoading = false;
           this.$message.error('修改失败')
           this.modalValue = ''
         })

@@ -1,18 +1,20 @@
 <template>
-  <div style="width: 100%; height: 200px;">
-    <amap cache-key="home-map"
+  <div style="width: 100%; height: 800px;">
+    <amap ref="map"
+          cache-key="home-map"
           map-style="amap://styles/whitesmoke">
-      <div v-for="device in this.$store.state.devices" :key="device.id">
+      <div v-for="device in devices" :key="device.id">
         <amap-text v-if="device.alerted"
                    :position="[device.posx,device.posy]"
-                   :icon="markerWarn"
                    :text="device.name"
+                   @click="changeMapCenter(device)"
                    :dom-style="{
         color: '#f00',
       }"/>
         <amap-text v-else
                    :position="[device.posx,device.posy]"
                    :text="device.name"
+                   @click="changeMapCenter(device)"
                    :dom-style="{
         color: '#0f0',
       }"/>
@@ -52,18 +54,19 @@ export default {
         console.log(this.$store.state.devices);
         console.log(res);
       });
-    }
-  }
+    },
+    changeMapCenter(device) {
+      this.$refs.map.$map.setCenter([device.posx, device.posy]);
+      // .setCenter([device.posx, device.posy]);
+    },
+  },
+  computed: {
+    devices() {
+      return this.$store.getters.getDevices;
+    },
+  },
 }
 </script>
 
 <style scoped>
-amap-marker {
-  background-color: #fff;
-  border-radius: 50%;
-  border: 1px solid #000;
-  width: 20px;
-  height: 20px;
-  box-shadow: 0 0 0 2px #fff;
-}
 </style>

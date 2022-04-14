@@ -4,46 +4,59 @@
     <div class="content-bottom">
 
       <div class="main-left">
+        <div class="toggel-box">
+          <div class="toggel" @click="toggle(0)">主页</div>
+          <div class="toggel" @click="toggle(1)">设备地图</div>
+          <div class="toggel" @click="toggle(2)">设备管理</div>
+          <div class="toggel" @click="toggle(3)">数据管理</div>
+        </div>
         <div class="wrap">
           <div class="title">
             设备列表
           </div>
           <div class="box-list">
-            <div v-for="(device,index) in this.devices" :key="device.id" class="box" :class="whichStatus(device.id)"
+            <div v-for="(device,index) in this.devices"
+                 :key="device.id"
+                 class="box"
+                 :class="whichStatus(device.id)"
                  @click="changeHomeView(index)">
               <div class="big-text">{{ device.id }}</div>
               <div class="small-text">{{ device.name }}</div>
             </div>
           </div>
         </div>
-        <div class="toggel-box">
-          <div class="toggel" @click="toggle(1)">设备地图</div>
-          <div class="toggel" @click="toggle(2)">报警管理</div>
-          <div class="toggel" @click="toggle(3)">数据管理</div>
-        </div>
+
       </div>
       <div class="main-right" v-if="isShow===0">
         <devices-status/>
-        <div class="right-middle">
-          <div v-for="device in showingDevices" :key="device.id"
-               class="divce-list"
-          >
+        <div class="right-middle" v-if="showingDevices">
+          <div v-for="device in showingDevices"
+               :key="device.id"
+               class="divce-list">
             <device-card
                 :device="device"
                 :deviceData="deviceData[device.id]"
             />
           </div>
         </div>
+        <div v-else class="right-middle">
+          <div v-for="device in HomeData"
+               :key="device"
+               class="divce-list">
+            <device-card/>
+          </div>
+        </div>
         <div class="right-bottom">
-          <mapHome/>
+          <mapHome ref="mapHome"/>
           <!--          <img src="../assets/bottom.jpg" alt="">-->
         </div>
       </div>
+
       <div class="main-right" v-else-if="isShow===1">
         <mapTab class="right-bottom"/>
       </div>
       <div class="main-right" v-else-if="isShow===2">
-        <device-manage class="right-bottom"/>
+        <device-manage/>
       </div>
       <div class="main-right" v-else-if="isShow===3">
         <data-tab class="right-bottom"/>
@@ -76,11 +89,20 @@ export default {
     Header: Header,
     DeviceCard: DeviceCard,
     mapHome: mapHome,
-    mapTab: mapTab
+    mapTab: mapTab,
   },
   methods: {
+    dataInArr(arr, data) {
+      for (let i = 0; i < arr.length; i++) {
+        if (arr[i] === data) {
+          return true;
+        }
+      }
+      return false;
+    },
     changeHomeView(index) {
-      if (index in this.HomeData)
+      this.$refs.mapHome.changeMapCenter(this.devices[index]);
+      if (this.dataInArr(this.HomeData, index))
         return;
       let temp = [];
       temp.push(index);
@@ -92,15 +114,7 @@ export default {
     toggle(v) {
       this.isShow = v;
     },
-    whichStatus(id) {
-      if (id in this.$store.getters.getStoppedDevices) {
-        return 'outline';
-      } else if (this.deviceData[id].alerted) {
-        return 'warning';
-      } else {
-        return 'running'
-      }
-    },
+
   },
   computed: {
     devices() {
@@ -113,11 +127,34 @@ export default {
       return this.$route.path.includes("/home");
     },
     showingDevices() {
+      if (this.devices.length === 0)
+        return;
       let temp = [];
       for (let i = 0; i < this.HomeData.length; i++) {
         temp.push(this.devices[this.HomeData[i]]);
       }
       return temp;
+    },
+    whichStatus() {
+      return function (id) {
+        let res = "";
+        let alerted = false;
+        for (let i = 0; i < this.devices.length; i++) {
+          if (this.devices[i].id === id) {
+            if (this.devices[i].alerted) {
+              alerted = true;
+            }
+          }
+        }
+        if (this.dataInArr(this.$store.getters.getStoppedDevices, id)) {
+          res = 'outline';
+        } else if (alerted) {
+          res = 'warning';
+        } else {
+          res = 'running'
+        }
+        return res;
+      }
     }
   }
 }
@@ -198,7 +235,6 @@ div {
 
 .box {
   width: 90%;
-  background-color: #e55c17;
   margin-bottom: 8px;
   border-radius: 5px;
   display: flex;

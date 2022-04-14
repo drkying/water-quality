@@ -156,15 +156,16 @@
         <span class="sub-c"></span>
       </div>
     </div>
-    <div class="bottom-dic">
-      仪器参数
-    </div>
+    <!--    <div class="bottom-dic">-->
+    <!--      仪器参数-->
+    <!--    </div>-->
     <a-modal
-        title="设备数据曲线"
+        :title="echartsTitle"
         :visible="echartsVisible"
         @cancel="handleCancel"
         @ok="handleCancel"
         destroyOnClose
+        :width="700"
     >
       <echarts
           :device-id="this.device.id"
@@ -176,7 +177,7 @@
 
 <script>
 import axios from "axios";
-import Echarts from "@/test/echarts";
+import Echarts from "@/tools/echarts";
 
 export default {
   name: "deviceCard",
@@ -186,10 +187,10 @@ export default {
       type: Object,
       default: function () {
         return {
-          "id": "0",
+          "id": "加载中...",
           "posx": 0,
           "posy": 0,
-          "name": "监测仪0000",
+          "name": "加载中...",
           "th_zd": 0,
           "th_toc": 0,
           "th_tpn": 0,
@@ -220,6 +221,7 @@ export default {
       echartsVisible: false,
       paraTypes: this.$store.getters.getParaTypes,
       type: '',
+      echartsTitle: '',
       deviceData: {
         "id": null,
         "spectrumWithLaser": "",
@@ -260,6 +262,7 @@ export default {
     showModal(t) {
       this.echartsVisible = true;
       this.type = this.paraTypes[t]
+      this.echartsTitle = '监测曲线: ' + this.device.name + ' ' + this.type;
     },
     handleCancel() {
       this.echartsVisible = false;
@@ -287,25 +290,6 @@ export default {
 </script>
 
 <style scoped>
-.right-middle {
-  width: 100%;
-  flex: 1;
-  background-color: #3c3e3d;
-  padding: 5px 0;
-  display: flex;
-}
-
-.divce-list {
-  width: 16.6%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  font-size: 13px;
-  margin-right: 0.5%;
-  background-color: #303030;
-  padding: 5px 8px;
-  border-radius: 5px;
-}
 
 .divce-title {
   width: 100%;
