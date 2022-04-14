@@ -171,6 +171,9 @@
           :device-id="this.device.id"
           :type="type">
       </echarts>
+      <button @click="sendSms">
+        记录最新数据
+      </button>
     </a-modal>
   </div>
 </template>
@@ -215,13 +218,13 @@ export default {
       }
     }
   },
-
   data() {
     return {
       echartsVisible: false,
       paraTypes: this.$store.getters.getParaTypes,
       type: '',
       echartsTitle: '',
+      id: '',
       deviceData: {
         "id": null,
         "spectrumWithLaser": "",
@@ -262,6 +265,7 @@ export default {
     showModal(t) {
       this.echartsVisible = true;
       this.type = this.paraTypes[t]
+      this.id = this.device.id
       this.echartsTitle = '监测曲线: ' + this.device.name + ' ' + this.type;
     },
     handleCancel() {
@@ -275,8 +279,20 @@ export default {
       }).then(res => {
         this.deviceData = res.data.data;
       })
+    },
+    sendSms() {
+      let ins = axios.create({
+        baseURL: '/sms'
+      })
+      ins.get('/sendsms', {
+        params: {
+          phone: '18685414361',
+          deviceid: this.id,
+          paramtype: this.type,
+          now_value: this.deviceData[this.type],
+        }
+      })
     }
-
   },
   created() {
     this.timer = setInterval(() => {

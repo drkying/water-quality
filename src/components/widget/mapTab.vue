@@ -1,8 +1,9 @@
 <template>
   <div style="width: 100%; height: 800px;">
-    <amap ref="map"
+    <amap ref="mapTab"
           cache-key="home-map"
-          map-style="amap://styles/whitesmoke">
+          map-style="amap://styles/whitesmoke"
+          @map-click="onMapClick">
       <div v-for="device in devices" :key="device.id">
         <amap-text v-if="device.alerted"
                    :position="[device.posx,device.posy]"
@@ -19,6 +20,18 @@
         color: '#0f0',
       }"/>
       </div>
+      <amap-info-window
+          class="info-content"
+          :position="activeDevice?[activeDevice.posx,activeDevice.posy]: null"
+          :vislble="!!activeDevice"
+          auto-move
+          is-custom
+      >
+        <div slot="content" style="width: 100px;height: 100px">
+          <h3>{{ activeDevice ? activeDevice.name : '' }}</h3>
+          <p>{{ activeDevice ? activeDevice.id : '' }}</p>
+        </div>
+      </amap-info-window>
     </amap>
   </div>
 </template>
@@ -34,6 +47,7 @@ export default {
       zoom: 14,
       pitch: 45,
       rotation: 15,
+      activeDevice: null,
       markerWarn: {
         image: markerWarn,
         imageSize: [32, 32],
@@ -56,8 +70,12 @@ export default {
       });
     },
     changeMapCenter(device) {
-      this.$refs.map.$map.setCenter([device.posx, device.posy]);
+      this.$refs.mapTab.$map.setCenter([device.posx, device.posy]);
+      this.activeDevice = device;
       // .setCenter([device.posx, device.posy]);
+    },
+    onMapClick() {
+      this.activeDevice = null;
     },
   },
   computed: {
@@ -69,4 +87,8 @@ export default {
 </script>
 
 <style scoped>
+.info-content {
+  position: relative;
+  width: 220px;
+}
 </style>

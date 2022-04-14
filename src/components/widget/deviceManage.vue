@@ -17,7 +17,8 @@
       <a-table-column title="仪器温度" data-index="_T"/>
       <a-table-column title="操作" data-index="operation">
         <template slot-scope="text,recordName">
-          <a-button type="primary" @click="handleEditName(recordName)">修改设备名称</a-button>
+          <a-button @click="handleEditName(recordName)">修改设备名称</a-button>
+          <a-button @click="handleShowImage(recordName)">查看设备图片</a-button>
         </template>
       </a-table-column>
 
@@ -99,10 +100,13 @@ export default {
         }
         //console.log(id)
         //console.log(devicesData[id])
-        tempObj._v = devicesData[id]._v
-        tempObj._u = devicesData[id]._u
-        tempObj._d = devicesData[id]._d
-        tempObj._T = devicesData[id]._T
+        if (devicesData[id] !== undefined) {
+          tempObj._v = devicesData[id]._v
+          tempObj._u = devicesData[id]._u
+          tempObj._d = devicesData[id]._d
+          tempObj._T = devicesData[id]._T
+        }
+
         // tempObj.rst=devicesData[id].rst
         // tempObj.vol=devicesData[id].vol
         // tempObj.temp=devicesData[id].temp
@@ -213,6 +217,33 @@ export default {
       this.$store.dispatch("getDevice").then(() => {
         this.$store.dispatch("getAllDeviceData").then(() => {
           this.$store.commit("setIsReady", true)
+        });
+      })
+    },
+    handleShowImage(scope) {
+      this.getImage(scope.id)
+    },
+    getImage(id) {
+      this.$store.dispatch('requestImage', id).then(() => {
+        this.$store.dispatch("getDeviceDataById", id).then(res => {
+          if (res["picAddr"]) {
+            let image = res["picAddr"];
+            this.$success({
+              title: '图片获取成功',
+              // JSX support
+              content: (
+                  <div>
+                    <img src={image} style="width: 100%;height: 100%"/>
+                  </div>
+              ),
+            });
+            window.open(image)
+          }
+        }).catch(() => {
+          this.$error({
+            title: '图片查看错误',
+            content: '该设备暂不支持查看图片',
+          });
         });
       })
     }

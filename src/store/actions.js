@@ -55,6 +55,7 @@ const data = {
 
     },
     getDeviceDataHistoryByDate(context, data) {
+        console.log(data)
         return new Promise((resolve, reject) => {
             axios.get("/water/data/getSpectrumByDate", {
                 params: {
@@ -63,6 +64,7 @@ const data = {
                     endTime: data.endTime
                 }
             }).then(response => {
+                console.log(response)
                 if (response.status === 200) {
                     //context.commit("setTempDeviceData",response.data.data)
                     resolve(response.data.data)

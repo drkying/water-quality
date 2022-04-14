@@ -31,7 +31,7 @@ import markerRun from '../../assets/running.png'
 import markerWarn from '../../assets/warning.png'
 
 export default {
-  name: "map",
+  name: "mapHome",
   data() {
     return {
       zoom: 14,

@@ -54,7 +54,7 @@
             show-time
             format="YYYY-MM-DD HH:mm:ss"
             placeholder="开始时间"
-            @openChange="handleStartOpenChange"
+            @change="handlePanelChange"
         />
         <a-date-picker
             v-model="endTime"
@@ -62,12 +62,11 @@
             show-time
             format="YYYY-MM-DD HH:mm:ss"
             placeholder="结束时间"
-            :open="endOpen"
-            @openChange="handleEndOpenChange"
+            @change="handlePanelChange"
         />
       </div>
     </div>
-    <!--    {{ echartsData }}-->
+    {{ echartsData }}
     <div id="main" style="height: 400px;"></div>
   </div>
 </template>
@@ -79,13 +78,13 @@ export default {
     return {
       id: '',
       parameter: '',
-      startTime: '',
-      endTime: '',
+      startTime: null,
+      endTime: null,
       devices: this.$store.getters.getDevices,
       parameters: this.$store.getters.getParaTypes,
       timeRanges: ['实时动态数据', '最近1小时', '最近3小时', '最近6小时', '最近12小时', '最近24小时'],
       timeRangeIndex: 0,
-      endOpen: false,
+      echartsData: null,
     }
   },
   methods: {
@@ -107,27 +106,34 @@ export default {
     disabledDate(time) {
       return time.getTime() > Date.now()
     },
-    disabledStartDate(startValue) {
-      const endValue = this.endValue;
-      if (!startValue || !endValue) {
+    disabledStartDate(startTime) {
+      const endTime = this.endTime;
+      if (!startTime || !endTime) {
         return false;
       }
-      return startValue.valueOf() > endValue.valueOf();
+      return startTime.valueOf() > endTime.valueOf();
     },
-    disabledEndDate(endValue) {
-      const startValue = this.startValue;
-      if (!endValue || !startValue) {
+    disabledEndDate(endTime) {
+      const startTime = this.startTime;
+      if (!endTime || !startTime) {
         return false;
       }
-      return startValue.valueOf() >= endValue.valueOf();
+      return startTime.valueOf() >= endTime.valueOf();
     },
-    handleStartOpenChange(open) {
-      if (!open) {
-        this.endOpen = true;
+    handlePanelChange() {
+      console.log(this.startTime, this.endTime)
+      if (this.startTime && this.endTime) {
+        let start = new Date(this.startTime).getTime()
+        let end = new Date(this.endTime).getTime()
+        let data = {
+          id: this.id,
+          startTime: start,
+          endTime: end,
+        }
+        this.$store.dispatch('getDeviceDataHistoryByDate', data).then(res => {
+          this.echartsData = res
+        })
       }
-    },
-    handleEndOpenChange(open) {
-      this.endOpen = open;
     },
   },
 }
