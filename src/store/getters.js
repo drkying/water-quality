@@ -29,6 +29,28 @@ const getters = {
     getStoppedDevices(state) {
         return state.stoppedDevices
     },
+    getDeviceStatus: (state) => (id) => {
+        console.log(state.devices)
+        if (state.devices.length === 0) {
+            return 'outline'
+        }
+
+        let stoppedDevices = state.stoppedDevices
+        for (let i = 0; i < stoppedDevices.length; i++) {
+            if (stoppedDevices[i] === id) {
+                return 'outline'
+            }
+        }
+        for (let i = 0; i < state.devices.length; i++) {
+            if (state.devices[i].id === id) {
+                if (state.devices[i].alerted) {
+                    return 'warning'
+                }
+            }
+        }
+
+        return 'running'
+    },
 
 }
 export default getters

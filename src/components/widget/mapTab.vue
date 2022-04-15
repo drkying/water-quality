@@ -3,33 +3,40 @@
     <amap ref="mapTab"
           cache-key="home-map"
           map-style="amap://styles/whitesmoke"
-          @map-click="onMapClick">
+          @click="closeInfoWindow">
       <div v-for="device in devices" :key="device.id">
         <amap-text v-if="device.alerted"
                    :position="[device.posx,device.posy]"
                    :text="device.name"
-                   @click="changeMapCenter(device)"
+                   @click="changeMapCenter(device);openInfoWindow(device)"
                    :dom-style="{
         color: '#f00',
       }"/>
         <amap-text v-else
                    :position="[device.posx,device.posy]"
                    :text="device.name"
-                   @click="changeMapCenter(device)"
+                   @click="changeMapCenter(device);openInfoWindow(device)"
                    :dom-style="{
         color: '#0f0',
       }"/>
       </div>
-      <amap-info-window
-          class="info-content"
-          :position="activeDevice?[activeDevice.posx,activeDevice.posy]: null"
-          :vislble="!!activeDevice"
-          auto-move
-          is-custom
+      <amap-info-window ref="info_window"
+                        v-if="devices"
+                        :position="activeDevice?[activeDevice.posx,activeDevice.posy]:null"
+                        :vislble="this.activeDevice!==null"
+                        auto-move
+                        is-custom
+                        :dom-style="{
+        background: '#1B499E',
+      }"
       >
-        <div slot="content" style="width: 100px;height: 100px">
-          <h3>{{ activeDevice ? activeDevice.name : '' }}</h3>
-          <p>{{ activeDevice ? activeDevice.id : '' }}</p>
+        <div>
+          <div v-if="activeDevice" style="background: black">
+            content of this info window
+            <div v-for="(value,key) in activeDevice" :key="key">
+              <div>{{ key }}:{{ value }}</div>
+            </div>
+          </div>
         </div>
       </amap-info-window>
     </amap>
@@ -69,13 +76,17 @@ export default {
         console.log(res);
       });
     },
+    openInfoWindow(device) {
+      this.activeDevice = device;
+      this.$refs.info_window.open();
+    },
     changeMapCenter(device) {
       this.$refs.mapTab.$map.setCenter([device.posx, device.posy]);
-      this.activeDevice = device;
       // .setCenter([device.posx, device.posy]);
     },
-    onMapClick() {
+    closeInfoWindow() {
       this.activeDevice = null;
+      this.$refs.info_window.close();
     },
   },
   computed: {
@@ -87,8 +98,4 @@ export default {
 </script>
 
 <style scoped>
-.info-content {
-  position: relative;
-  width: 220px;
-}
 </style>

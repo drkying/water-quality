@@ -85,20 +85,28 @@ export default {
       timeRanges: ['实时动态数据', '最近1小时', '最近3小时', '最近6小时', '最近12小时', '最近24小时'],
       timeRangeIndex: 0,
       echartsData: null,
+      dynamic: false,
     }
   },
   methods: {
     handleIdChange(value) {
+      console.log(value)
       this.startTime = ''
       this.endTime = ''
       this.id = value
     },
     handleParaChange(value) {
+      console.log(value)
       this.startTime = ''
       this.endTime = ''
       this.parameter = value
     },
     handleTimeRangeChange(value) {
+      console.log(value)
+      if (value === this.timeRanges[0]) {
+        this.timeRangeIndex = 0
+        this.dynamic = true
+      }
       this.startTime = ''
       this.endTime = ''
       this.timeRange = value
@@ -135,6 +143,19 @@ export default {
         })
       }
     },
+    transformJsonToEchartsData(JsonData) {
+      let res = [];
+      res.push(["id", "zd", "toc", "tpn", "tds", "tem2", "dom", "yl", "tem1", "ph", "cod", "odf", "an", "_do", "sw", "dd", "oid", "_v", "_u", "_d", "_T", "device", "time"])
+      for (let item in JsonData) {
+        let temp = []
+        Object.keys(item).forEach(function (key) {
+          temp.push(item[key])
+        })
+        res.push(temp)
+      }
+      return res
+
+    }
   },
 }
 </script>

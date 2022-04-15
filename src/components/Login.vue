@@ -38,10 +38,11 @@ export default  {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  height: 60%;
   flex-direction: column;
   /*background: url(../assets/login-back.jpg)*/
   background: white;
+  padding: 50px;
 }
 
 h1 {

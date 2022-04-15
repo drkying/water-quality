@@ -4,156 +4,156 @@
   c data-button
   -->
 <template>
-  <div v-if="device">
-    <div class="divce-title">
+  <div v-if="deviceStatus!=='outline'">
+    <div class="divce-title" :class="deviceStatus+'-background'">
       {{ device.name }}
     </div>
     <div class="params-list">
       <div class="params" v-if="deviceData.dom">
         <span class="a">DOM</span>
-        <span class="b">{{ deviceData.dom }}</span>
-        <span class="c" @click="showModal(0)">查看曲线</span>
+        <span class="b" :class="paramStatus('dom')+'-color'">{{ deviceData.dom }}</span>
+        <span class="c" :class="paramStatus('dom')+'-background'" @click="showModal(0)">查看曲线</span>
       </div>
       <div class="params" v-else>
         <span class="a">DOM</span>
-        <span class="b">暂无数据</span>
-        <span class="c"></span>
+        <span class="b outline-color">暂无数据</span>
+        <span class="c outline-background"></span>
       </div>
       <div class="params" v-if="deviceData.zd">
         <span class="a">ZD</span>
-        <span class="b">{{ deviceData.zd }}</span>
-        <span class="c" @click="showModal(1)">查看曲线</span>
+        <span class="b" :class="paramStatus('zd')+'-color'">{{ deviceData.zd }}</span>
+        <span class="c" :class="paramStatus('zd')+'-background'" @click="showModal(1)">查看曲线</span>
       </div>
       <div class="params" v-else>
         <span class="a">ZD</span>
-        <span class="b">暂无数据</span>
-        <span class="c"></span>
+        <span class="b outline-color">暂无数据</span>
+        <span class="c outline-background"></span>
       </div>
       <div class="params" v-if="deviceData.yl">
         <span class="a">YL</span>
-        <span class="b">{{ deviceData.yl }}</span>
-        <span class="c" @click="showModal(2)">查看曲线</span>
+        <span class="b" :class="paramStatus('yl')+'-color'">{{ deviceData.yl }}</span>
+        <span class="c" :class="paramStatus('yl')+'-background'" @click="showModal(2)">查看曲线</span>
       </div>
       <div class="params" v-else>
         <span class="a">YL</span>
-        <span class="b">暂无数据</span>
-        <span class="c"></span>
+        <span class="b outline-color">暂无数据</span>
+        <span class="c outline-background"></span>
       </div>
       <div class="params" v-if="deviceData.cod">
         <span class="a">COD</span>
-        <span class="b">{{ deviceData.cod }}</span>
-        <span class="c" @click="showModal(3)">查看曲线</span>
+        <span class="b" :class="paramStatus('cod')+'-color'">{{ deviceData.cod }}</span>
+        <span class="c" :class="paramStatus('cod')+'-background'" @click="showModal(3)">查看曲线</span>
       </div>
       <div class="params" v-else>
         <span class="a">COD</span>
-        <span class="b">暂无数据</span>
-        <span class="c"></span>
+        <span class="b outline-color">暂无数据</span>
+        <span class="c outline-background"></span>
       </div>
       <div class="params" v-if="deviceData.toc">
         <span class="a">TOC</span>
-        <span class="b">{{ deviceData.toc }}</span>
-        <span class="c" @click="showModal(4)">查看曲线</span>
+        <span class="b" :class="paramStatus('toc')+'-color'">{{ deviceData.toc }}</span>
+        <span class="c" :class="paramStatus('toc')+'-background'" @click="showModal(4)">查看曲线</span>
       </div>
       <div class="params" v-else>
         <span class="a">TOC</span>
-        <span class="b">暂无数据</span>
-        <span class="c"></span>
+        <span class="b outline-color">暂无数据</span>
+        <span class="c outline-background"></span>
       </div>
       <div class="params" v-if="deviceData.tds">
         <span class="a">TDS</span>
-        <span class="b">{{ deviceData.tds }}</span>
-        <span class="c" @click="showModal(5)">查看曲线</span>
+        <span class="b" :class="paramStatus('tds')+'-color'">{{ deviceData.tds }}</span>
+        <span class="c" :class="paramStatus('tds')+'-background'" @click="showModal(5)">查看曲线</span>
       </div>
       <div class="params" v-else>
         <span class="a">TDS</span>
-        <span class="b">暂无数据</span>
-        <span class="c"></span>
+        <span class="b outline-color">暂无数据</span>
+        <span class="c outline-background"></span>
       </div>
       <div class="params" v-if="deviceData.tem1">
         <span class="a">水温</span>
-        <span class="b">{{ deviceData.tem1 }}</span>
-        <span class="c" @click="showModal(6)">查看曲线</span>
+        <span class="b" :class="paramStatus('tem1')+'-color'">{{ deviceData.tem1 }}</span>
+        <span class="c" :class="paramStatus('tem1')+'-background'" @click="showModal(6)">查看曲线</span>
       </div>
       <div class="params" v-else>
         <span class="a">水温</span>
-        <span class="b">暂无数据</span>
-        <span class="c"></span>
+        <span class="b outline-color">暂无数据</span>
+        <span class="c outline-background"></span>
       </div>
       <div class="params" v-if="deviceData.ph">
         <span class="a">PH</span>
-        <span class="b">{{ deviceData.ph }}</span>
-        <span class="c" @click="showModal(7)">查看曲线</span>
+        <span class="b" :class="paramStatus('ph')+'-color'">{{ deviceData.ph }}</span>
+        <span class="c" :class="paramStatus('ph')+'-background'" @click="showModal(7)">查看曲线</span>
       </div>
       <div class="params" v-else>
         <span class="a">PH</span>
-        <span class="b">暂无数据</span>
-        <span class="c"></span>
+        <span class="b outline-color">暂无数据</span>
+        <span class="c outline-background"></span>
       </div>
       <div class="params" v-if="deviceData.an">
         <span class="a">氨氮</span>
-        <span class="b">{{ deviceData.an }}</span>
-        <span class="c" @click="showModal(8)">查看曲线</span>
+        <span class="b" :class="paramStatus('an')+'-color'">{{ deviceData.an }}</span>
+        <span class="c" :class="paramStatus('an')+'-background'" @click="showModal(8)">查看曲线</span>
       </div>
       <div class="params" v-else>
         <span class="a">氨氮</span>
-        <span class="b">暂无数据</span>
-        <span class="c"></span>
+        <span class="b outline-color">暂无数据</span>
+        <span class="c outline-background"></span>
       </div>
       <div class="params" v-if="deviceData._do">
         <span class="a">溶解氧</span>
-        <span class="b">{{ deviceData._do }}</span>
-        <span class="c" @click="showModal(9)">查看曲线</span>
+        <span class="b" :class="paramStatus('_do')+'-color'">{{ deviceData._do }}</span>
+        <span class="c" :class="paramStatus('_do')+'-background'" @click="showModal(9)">查看曲线</span>
       </div>
       <div class="params" v-else>
         <span class="a">溶解氧</span>
-        <span class="b">暂无数据</span>
-        <span class="c"></span>
+        <span class="b outline-color">暂无数据</span>
+        <span class="c outline-background"></span>
       </div>
       <div class="params" v-if="deviceData.sw">
         <span class="a">SW</span>
-        <span class="b">{{ deviceData.sw }}</span>
-        <span class="c" @click="showModal(10)">查看曲线</span>
+        <span class="b" :class="paramStatus('sw')+'-color'">{{ deviceData.sw }}</span>
+        <span class="c" :class="paramStatus('sw')+'-background'" @click="showModal(10)">查看曲线</span>
       </div>
       <div class="params" v-else>
         <span class="a">SW</span>
-        <span class="b">暂无数据</span>
-        <span class="c"></span>
+        <span class="b outline-color">暂无数据</span>
+        <span class="c outline-background"></span>
       </div>
       <div class="params" v-if="deviceData.dd">
         <span class="a">DD</span>
-        <span class="b">{{ deviceData.dd }}</span>
-        <span class="c" @click="showModal(11)">查看曲线</span>
+        <span class="b" :class="paramStatus('dd')+'-color'">{{ deviceData.dd }}</span>
+        <span class="c" :class="paramStatus('dd')+'-background'" @click="showModal(11)">查看曲线</span>
       </div>
       <div class="params" v-else>
         <span class="a">DD</span>
-        <span class="b">暂无数据</span>
-        <span class="c"></span>
+        <span class="b outline-color">暂无数据</span>
+        <span class="c outline-background"></span>
       </div>
 
     </div>
-    <div class="divce-sub-title">
+    <div class="divce-sub-title" :class="paramStatus('odf')+'-background'">
       油污检测参数
     </div>
     <div class="sub-params-list">
       <div class="sub-param">
         <span class="sub-a">油污种类</span>
-        <span class="sub-b">暂无</span>
-        <span class="sub-c"></span>
+        <span class="sub-b outline-color">暂无</span>
+        <span class="sub-c outline-background"></span>
       </div>
       <div class="sub-param" v-if="deviceData.odf">
         <span class="sub-a">油厚度</span>
-        <span class="sub-b">{{ deviceData.odf }}</span>
-        <span class="sub-c" @click="showModal(12)">查看曲线</span>
+        <span class="sub-b" :class="paramStatus('odf')+'-color'">{{ deviceData.odf }}</span>
+        <span class="sub-c" :class="paramStatus('odf')+'-background'" @click="showModal(12)">查看曲线</span>
       </div>
       <div class="sub-param" v-else>
         <span class="sub-a">油厚度</span>
-        <span class="sub-b">暂无数据</span>
-        <span class="sub-c"></span>
+        <span class="sub-b outline-color">暂无数据</span>
+        <span class="sub-c outline-background"></span>
       </div>
       <div class="sub-param">
         <span class="sub-a">油强度</span>
-        <span class="sub-b">暂无数据</span>
-        <span class="sub-c"></span>
+        <span class="sub-b outline-color">暂无数据</span>
+        <span class="sub-c outline-background"></span>
       </div>
     </div>
     <!--    <div class="bottom-dic">-->
@@ -171,10 +171,98 @@
           :device-id="this.device.id"
           :type="type">
       </echarts>
-      <button @click="sendSms">
+      <a-button @click="sendSms">
         记录最新数据
-      </button>
+      </a-button>
     </a-modal>
+  </div>
+  <div v-else>
+    <div class="divce-title outline-background">
+      {{ device.name }}
+    </div>
+    <div class="params-list">
+      <div class="params">
+        <span class="a">DOM</span>
+        <span class="b outline-color">暂无数据</span>
+        <span class="c outline-background"></span>
+      </div>
+      <div class="params">
+        <span class="a">ZD</span>
+        <span class="b outline-color">暂无数据</span>
+        <span class="c outline-background"></span>
+      </div>
+      <div class="params">
+        <span class="a">YL</span>
+        <span class="b outline-color">暂无数据</span>
+        <span class="c outline-background"></span>
+      </div>
+      <div class="params">
+        <span class="a">COD</span>
+        <span class="b outline-color">暂无数据</span>
+        <span class="c outline-background"></span>
+      </div>
+      <div class="params">
+        <span class="a">TOC</span>
+        <span class="b outline-color">暂无数据</span>
+        <span class="c outline-background"></span>
+      </div>
+      <div class="params">
+        <span class="a">TDS</span>
+        <span class="b outline-color">暂无数据</span>
+        <span class="c outline-background"></span>
+      </div>
+      <div class="params">
+        <span class="a">水温</span>
+        <span class="b outline-color">暂无数据</span>
+        <span class="c outline-background"></span>
+      </div>
+      <div class="params">
+        <span class="a">PH</span>
+        <span class="b outline-color">暂无数据</span>
+        <span class="c outline-background"></span>
+      </div>
+      <div class="params">
+        <span class="a">氨氮</span>
+        <span class="b outline-color">暂无数据</span>
+        <span class="c outline-background"></span>
+      </div>
+      <div class="params">
+        <span class="a">溶解氧</span>
+        <span class="b outline-color">暂无数据</span>
+        <span class="c outline-background"></span>
+      </div>
+      <div class="params">
+        <span class="a">SW</span>
+        <span class="b outline-color">暂无数据</span>
+        <span class="c outline-background"></span>
+      </div>
+      <div class="params">
+        <span class="a">DD</span>
+        <span class="b outline-color">暂无数据</span>
+        <span class="c outline-background"></span>
+      </div>
+
+    </div>
+    <div class="divce-sub-title outline-background">
+      油污检测参数
+    </div>
+    <div class="sub-params-list">
+      <div class="sub-param">
+        <span class="sub-a">油污种类</span>
+        <span class="sub-b outline-color">暂无</span>
+        <span class="sub-c outline-background"></span>
+      </div>
+      <div class="sub-param">
+        <span class="sub-a">油厚度</span>
+        <span class="sub-b outline-color">暂无数据</span>
+        <span class="sub-c outline-background"></span>
+      </div>
+      <div class="sub-param">
+        <span class="sub-a">油强度</span>
+        <span class="sub-b outline-color">暂无数据</span>
+        <span class="sub-c outline-background"></span>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -225,6 +313,7 @@ export default {
       type: '',
       echartsTitle: '',
       id: '',
+      ready: false,
       deviceData: {
         "id": null,
         "spectrumWithLaser": "",
@@ -258,15 +347,22 @@ export default {
         "spbAddr": "https://guangpuhui.oss-cn-shanghai.aliyuncs.com/1638251968321",
         "sendingType": "1",
         "time": "2022-03-08T21:56:28.944+0800"
-      }
+      },
     }
   },
   methods: {
     showModal(t) {
-      this.echartsVisible = true;
-      this.type = this.paraTypes[t]
-      this.id = this.device.id
-      this.echartsTitle = '监测曲线: ' + this.device.name + ' ' + this.type;
+      if (this.ready) {
+        this.echartsVisible = true;
+        this.type = this.paraTypes[t]
+        this.id = this.device.id
+        this.echartsTitle = '监测曲线: ' + this.device.name + ' ' + this.type;
+      } else {
+        this.$message({
+          message: '设备数据加载中...',
+          type: 'warning'
+        });
+      }
     },
     handleCancel() {
       this.echartsVisible = false;
@@ -278,6 +374,7 @@ export default {
         }
       }).then(res => {
         this.deviceData = res.data.data;
+        this.ready = true;
       })
     },
     sendSms() {
@@ -300,7 +397,31 @@ export default {
     }, 5000);
   },
   beforeDestroy() {
-    clearInterval(this.timer);
+    if (this.timer) {
+      clearInterval(this.timer);
+    }
+  },
+  computed: {
+    deviceStatus() {
+      return this.$store.getters.getDeviceStatus(this.device.id)
+    },
+    paramStatus() {
+      return function (type) {
+        let paramsAlerted = this.device.paramsAlerted
+        let t = type.toUpperCase()
+        for (let i = 0; i < paramsAlerted.length; i++) {
+          if (t === paramsAlerted[i]) {
+            return 'warning'
+          }
+        }
+        if (this.deviceData[type] === -1) {
+          this.deviceData[type] = null
+          return 'outline'
+        }
+
+        return 'running'
+      }
+    }
   }
 }
 </script>
@@ -313,7 +434,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #1BA46E;
+  /*background-color: #1BA46E;*/
   font-weight: 700;
   font-size: 14px;
   margin-bottom: 3px;
@@ -337,13 +458,13 @@ export default {
 }
 
 .b {
-  color: #1ba46e;
+  /*color: #1ba46e;*/
   font-weight: 700;
   font-size: 14px;
 }
 
 .c {
-  background-color: #1ba46e;
+  /*background-color: #1ba46e;*/
   border-radius: 1px;
   font-size: 12px;
   padding: 0px 5px;
@@ -352,7 +473,7 @@ export default {
 }
 
 .divce-sub-title {
-  background-color: #1ba46e;
+  /*background-color: #1ba46e;*/
   font-size: 12px;
   border-radius: 5px;
   display: flex;
@@ -375,24 +496,47 @@ export default {
 
 .sub-b {
   width: 90%;
-  color: #1ba46e;
+  /*color: #1ba46e;*/
   font-weight: 700;
 }
 
 .sub-c {
-  background-color: #1ba46e;
+  /*background-color: #1ba46e;*/
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 1px;
 }
 
-.bottom-dic {
-  width: 80px;
-  font-size: 12px;
-  background-color: #9e9e9e;
-  border-radius: 15px;
-  text-align: center;
-  margin: 0 auto;
+/*.bottom-dic {*/
+/*  width: 80px;*/
+/*  font-size: 12px;*/
+/*  background-color: #9e9e9e;*/
+/*  border-radius: 15px;*/
+/*  text-align: center;*/
+/*  margin: 0 auto;*/
+/*}*/
+.running-background {
+  background-color: #1ba46e;
+}
+
+.running-color {
+  color: #1ba46e;
+}
+
+.warning-background {
+  background-color: #E25F17;
+}
+
+.warning-color {
+  color: #E25F17;
+}
+
+.outline-background {
+  background-color: #787878;
+}
+
+.outline-color {
+  color: #787878;
 }
 </style>

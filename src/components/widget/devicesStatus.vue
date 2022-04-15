@@ -12,10 +12,10 @@
         <div class="point" style="background-color:#E25F17;"></div>
         <div class="text">报警</div>
       </div>
-      <div class="bot">
-        <div class="point" style="background-color:#1B499E;"></div>
-        <div class="text">暂停</div>
-      </div>
+      <!--      <div class="bot">-->
+      <!--        <div class="point" style="background-color:#1B499E;"></div>-->
+      <!--        <div class="text">暂停</div>-->
+      <!--      </div>-->
       <div class="bot">
         <div class="point" style="background-color:#787878;"></div>
         <div class="text">离线</div>
