@@ -377,18 +377,65 @@ export default {
         this.ready = true;
       })
     },
+    pWithSendSms() {
+      let ins = axios.create({
+        baseURL: '/sms'
+      })
+      return new Promise((resolve, reject) => {
+        ins.get('/sendsms', {
+          params: {
+            phone: '18685414361',
+            deviceid: this.id,
+            paramtype: this.type,
+            now_value: this.deviceData[this.type],
+          }
+        }).then(res => {
+          resolve(res)
+        }).catch(err => {
+          reject(err)
+        })
+      })
+    },
     sendSms() {
       let ins = axios.create({
         baseURL: '/sms'
       })
-      ins.get('/sendsms', {
-        params: {
-          phone: '18685414361',
-          deviceid: this.id,
-          paramtype: this.type,
-          now_value: this.deviceData[this.type],
-        }
+      new Promise((resolve, reject) => {
+        ins.get('/sendsms', {
+          params: {
+            phone: '18685414361',
+            deviceid: this.id,
+            paramtype: this.type,
+            now_value: this.deviceData[this.type],
+          }
+        }).then(res => {
+          resolve(res)
+        }).catch(err => {
+          reject(err)
+        })
+      }).then(res => {
+        console.log(res['data']['SendStatusSet'][0]['Message'])
+        let message = res['data']['SendStatusSet'][0]['Message']
+        if (message === "send success")
+          this.$message.success("短信发送成功！");
+        else this.$message.error(message);
+      }).catch(err => {
+        if (err['data']['SendStatusSet'][0]['Message'])
+          this.$message.error("短信发送失败！");
+        else
+          this.$message.error(err)
       })
+      //
+      // ins.get('/sendsms', {
+      //   params: {
+      //     phone: '18685414361',
+      //     deviceid: this.id,
+      //     paramtype: this.type,
+      //     now_value: this.deviceData[this.type],
+      //   }
+      // })
+      // }
+      // )
     }
   },
   created() {

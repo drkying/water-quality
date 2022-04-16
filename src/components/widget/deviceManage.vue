@@ -67,6 +67,7 @@ export default {
       editingType: '',
       paraTypes: this.$store.getters.getParaTypes,
       describe: this.$store.getters.getParaDescribe,
+      lastImage: {},
     }
   },
   computed: {
@@ -228,6 +229,17 @@ export default {
         this.$store.dispatch("getDeviceDataById", id).then(res => {
           if (res["picAddr"]) {
             let image = res["picAddr"];
+            if (this.lastImage[id] == null) {
+              this.lastImage[id] = image
+            } else if (this.lastImage[id] !== image) {
+              this.lastImage[id] = image
+            } else if (this.lastImage[id] === image) {
+              this.$error({
+                title: '图片查看错误',
+                content: '未获取该设备的最新图片，请等待光谱仪上传图片后再查看'
+              });
+              return
+            }
             this.$success({
               title: '图片获取成功',
               // JSX support
@@ -238,6 +250,7 @@ export default {
               ),
             });
             window.open(image)
+
           }
         }).catch(() => {
           this.$error({

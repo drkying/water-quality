@@ -30,7 +30,7 @@ const getters = {
         return state.stoppedDevices
     },
     getDeviceStatus: (state) => (id) => {
-        console.log(state.devices)
+        //console.log(state.devices)
         if (state.devices.length === 0) {
             return 'outline'
         }
