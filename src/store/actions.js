@@ -83,9 +83,47 @@ const data = {
     },
 }
 const device = {
+    checkCode(context, code) {
+        return new Promise((resolve, reject) => {
+            axios.get("/water/device/checkCode", {
+                params: {
+                    code: code
+                }
+            }).then(response => {
+                if (response.status === 200) {
+                    resolve(response.data)
+                } else {
+                    reject(response.data)
+                }
+                return response.data
+            }).catch(error => {
+                reject(error)
+            });
+        })
+    },
+    getDevicesByFilter(context, filter) {
+        return new Promise((resolve, reject) => {
+            axios.get("/water/device/getDevices", {
+                params: {
+                    filter: filter
+                }
+            }).then(response => {
+                if (response.status === 200) {
+                    context.commit("setDevices", response.data.data)
+                    resolve(response.data.data)
+                } else {
+                    context.commit("setDevices", null)
+                    reject(response.data.data)
+                }
+                return response.data.data
+            }).catch(error => {
+                reject(error)
+            });
+        })
+    },
     getDevice(context) {
         return new Promise((resolve, reject) => {
-            axios.get("/water/device/getDevices").then(response => {
+            axios.get("/water/device/getDevices?filter=" + context.getters.getFilter).then(response => {
                 if (response.status === 200) {
                     context.commit("setDevices", response.data.data)
                     resolve(response.data.data)

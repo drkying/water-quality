@@ -112,7 +112,8 @@ export default {
         myChart.setOption({
           series: [
             {
-              data: this.tempData
+              data: this.tempData,
+              smooth: true
             }
           ]
         });

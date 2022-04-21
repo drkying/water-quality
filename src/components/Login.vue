@@ -23,12 +23,30 @@ export default  {
   },
   methods: {
     doLogin () {
-      if (this.accesscode === '123') {
-        this.$store.commit('setIsLogin',true)
-        this.$router.push('/home')
-      } else {
-        this.$message.error('授权码错误')
-      }
+      // if (this.accesscode === '123') {
+      //   this.$store.commit('setIsLogin',true)
+      //   this.$router.push('/home')
+      // } else {
+      //   this.$message.error('授权码错误')
+      // }
+      this.$store.dispatch("checkCode", this.accesscode).then(res => {
+        if (res.success) {
+          this.$store.commit('setIsLogin', true)
+          this.$store.commit('setFilter', res.message)
+          this.$store.dispatch("getDevice").then(() => {
+            this.$store.dispatch("getAllDeviceData").then(() => {
+              this.$store.commit("setIsReady", true)
+              this.$message.success('登录成功')
+              this.$message.success('可查看的设备范围为：' + this.$store.getters.getFilter)
+              this.$router.push('/home')
+            });
+          })
+        } else {
+          this.$message.error(res.message)
+        }
+      }).catch(err => {
+        this.$message.error(err)
+      })
     }
   }
 }

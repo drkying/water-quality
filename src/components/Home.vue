@@ -129,6 +129,8 @@ export default {
     showingDevices() {
       if (this.devices.length === 0)
         return;
+      if (this.devices.length <= 5)
+        return this.devices;
       let temp = [];
       for (let i = 0; i < this.HomeData.length; i++) {
         temp.push(this.devices[this.HomeData[i]]);

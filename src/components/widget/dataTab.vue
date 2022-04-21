@@ -5,7 +5,7 @@
         <span class="data-filter-title">
           设备
         </span><br>
-        <a-select :default-value="devices[0].id"
+        <a-select :default-value="devices[2].id"
                   @change="handleIdChange"
                   class="data-filter-content">
           <a-select-option v-for="device in devices"
@@ -66,17 +66,23 @@
         />
       </div>
     </div>
+    <div id="main" style="height: 400px;background: white"></div>
     {{ echartsData }}
-    <div id="main" style="height: 400px;"></div>
   </div>
 </template>
 
 <script>
+import * as echarts from "echarts";
+
+let chartDom = null;
+let myChart = null;
+let option;
+
 export default {
   name: "dataTab",
   data() {
     return {
-      id: '',
+      id: '106',
       parameter: '',
       startTime: null,
       endTime: null,
@@ -86,14 +92,56 @@ export default {
       timeRangeIndex: 0,
       echartsData: null,
       dynamic: false,
+      tempData: {},
+      Xtime: [],
+      lastDataTime: null,
     }
   },
   methods: {
+    drawLine: function () {
+      chartDom = document.getElementById('main');
+      myChart = echarts.init(chartDom);
+      option = {
+        xAxis: {
+          type: 'time',
+          data: [],
+        },
+        yAxis: {
+          type: 'value'
+        },
+        legend: {
+          data: this.$store.getters.getParaTypes
+        },
+        tooltip: {
+          trigger: 'axis'
+        },
+        series: {},
+        toolbox: {
+          feature: {
+            saveAsImage: {}
+          }
+        },
+      };
+      myChart.showLoading();
+    },
     handleIdChange(value) {
       console.log(value)
       this.startTime = ''
       this.endTime = ''
       this.id = value
+      this.tempData = {}
+      this.Xtime = []
+      let types = this.$store.getters.getParaTypes
+      for (let i = 0; i < types.length; i++) {
+        console.log(this.tempData[types[i]])
+        this.tempData[types[i]] = {
+          name: types[i],
+          type: 'line',
+          stack: 'x',
+          data: [],
+          symbolSize: 1,
+        }
+      }
     },
     handleParaChange(value) {
       console.log(value)
@@ -154,9 +202,65 @@ export default {
         res.push(temp)
       }
       return res
-
+    },
+    removeKeyFromObjectAndSaveToArr(obj) {
+      let arr = [];
+      for (let key in obj) {
+        if (Object.prototype.hasOwnProperty.call(obj, key)) {
+          arr.push(obj[key]);
+        }
+      }
+      return arr;
     }
   },
+  mounted() {
+    this.drawLine()
+  },
+  created() {
+    let types = this.$store.getters.getParaTypes
+    for (let i = 0; i < types.length; i++) {
+      console.log(this.tempData[types[i]])
+      this.tempData[types[i]] = {
+        name: types[i],
+        type: 'line',
+        stack: 'x',
+        data: []
+      }
+    }
+    this.timer = setInterval(() => {
+      this.$store.dispatch('getDeviceDataById', this.id).then(res => {
+        if (this.id === '') return;
+        if (this.lastDataTime === null) {
+          this.lastDataTime = res.time
+        } else if (this.lastDataTime === res.time) {
+          return
+        } else if (this.lastDataTime !== res.time) {
+          this.lastDataTime = res.time
+        }
+        let tempTime = new Date(res.time)
+        let time = tempTime.getFullYear() + '-' + (tempTime.getMonth() + 1) + '-' + tempTime.getDate() + ' ' + tempTime.getHours() + ':' + tempTime.getMinutes() + ':' + tempTime.getSeconds()
+        for (let i = 0; i < types.length; i++) {
+          console.log(res, this.tempData, this.Xtime)
+          this.tempData[types[i]]['data'].push([time, res[types[i]]])
+        }
+        this.Xtime.push(time)
+
+        option.series = this.removeKeyFromObjectAndSaveToArr(this.tempData)
+        option.xAxis.data = this.Xtime
+        // myChart.setOption({
+        //   XAxis: {
+        //     data: this.Xtime
+        //   },
+        //   series: this.tempData,
+        // })
+        console.log(option)
+        option && myChart.setOption(option);
+        myChart.hideLoading()
+      }).catch(err => {
+        console.log(err)
+      })
+    }, 1000)
+  }
 }
 </script>
 

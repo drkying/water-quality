@@ -2,6 +2,9 @@ const getters = {
     getDomain(state) {
         return state.domain
     },
+    getFilter(state) {
+        return state.filter
+    },
     isLogin(state) {
         return state.isLogin
     },
