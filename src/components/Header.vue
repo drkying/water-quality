@@ -11,8 +11,17 @@
         <div class="time">
           <nowTime/>
         </div>
-        <div class="user" @click="doSignOut">
-          用户01
+        <div @click="doSignOut">
+          <a-dropdown>
+            <a-menu slot="overlay" @click="doSignOut">
+              <a-menu-item key="1"> 退出登录</a-menu-item>
+            </a-menu>
+            <a-button style="margin-left: 8px">
+              <a-icon type="user"/>
+              用户: {{ this.$store.getters.getFilter }}
+              <a-icon type="down"/>
+            </a-button>
+          </a-dropdown>
         </div>
       </div>
     </div>
@@ -80,8 +89,9 @@ export default {
 }
 .nav-down {
   display: flex;
-  align-items: flex-start;
+  /*align-items: flex-start;*/
   justify-content: space-between;
+  align-items: center;
 }
 .time {
   margin-right: 15px;

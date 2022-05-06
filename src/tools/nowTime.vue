@@ -1,5 +1,5 @@
 <template>
-  <div class="nowTime">
+  <div>
     {{ now_date }}
     {{ now_time }}
   </div>

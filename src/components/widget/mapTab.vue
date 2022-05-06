@@ -31,11 +31,14 @@
       }"
       >
         <div>
-          <div v-if="activeDevice" style="background: black">
-            content of this info window
-            <div v-for="(value,key) in activeDevice" :key="key">
-              <div>{{ key }}:{{ value }}</div>
-            </div>
+          <div v-if="activeDevice" style="background: #1BA46E">
+            <a-descriptions bordered title="设备信息">
+
+              <a-descriptions-item v-for="(value,key) in activeDevice" :key="key" :label="key">{{ value }}
+              </a-descriptions-item>
+
+
+            </a-descriptions>
           </div>
         </div>
       </amap-info-window>
