@@ -18,7 +18,8 @@
     "vue": "^2.6.11",
     "vue-axios": "^3.4.1",
     "vue-router": "^3.5.3",
-    "vuex": "^3.6.2"
+    "vuex": "^3.6.2",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@types/node-fetch": "^2.6.1",

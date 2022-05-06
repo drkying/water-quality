@@ -61,6 +61,7 @@
 
 <script>
 import * as echarts from "echarts";
+import * as XLSX from "xlsx";
 
 let chartDom = null;
 let myChart = null;
@@ -97,7 +98,6 @@ export default {
       this.Xtime = []
       let types = this.$store.getters.getParaTypes
       for (let i = 0; i < types.length; i++) {
-        console.log(this.tempData[types[i]])
         this.tempData[types[i]] = {
           name: types[i],
           type: 'line',
@@ -133,7 +133,11 @@ export default {
               title: '导出Excel',
               icon: 'path://M795.3408 69.632L732.6208 0H238.6944c-35.6352 0-49.408 26.4192-49.408 47.0528v185.856H258.56V84.6336c0-7.8848 6.656-14.5408 14.336-14.5408h353.4336c7.7824 0 11.6736 1.3824 11.6736 7.7824v246.784h251.5456c9.8816 0 13.7216 5.12 13.7216 12.5952v602.624c0 12.5952-5.12 14.4896-12.8 14.4896H272.896a14.6944 14.6944 0 0 1-14.336-14.5408V884.736H189.7472v86.784c-0.9216 30.72 15.4624 52.48 48.9472 52.48H924.672c35.84 0 48.0768-25.9584 48.0768-49.6128V265.5744l-17.92-19.456-159.5392-176.4352z m-86.9376 8.192l19.8144 22.2208 132.9152 146.0736 7.3216 8.8576h-135.8336c-10.24 0-16.7424-1.6896-19.456-5.12-2.7136-3.328-4.3008-8.704-4.7616-16.0256V77.824z m-55.808 468.3264h234.3424v68.3008h-234.3936v-68.3008z m0-136.4992h234.3424v68.2496h-234.3936V409.6z m0 273.0496h234.3424v68.3008h-234.3936v-68.3008zM51.2 288.0512v546.1504h535.808V288.0512H51.2z m267.9296 317.6448l-32.768 50.0736h32.768V716.8H154.4192L273.92 537.088 168.0384 375.5008H256.512L319.1808 469.504l62.6176-94.0032h88.4224L364.1344 537.088 483.7888 716.8H391.9872l-72.8576-111.104z',
               onclick: function () {
-                this.exportExcel();
+                let data = option.series.data
+                let ws = XLSX.utils.json_to_sheet(data);
+                let wb = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+                XLSX.writeFile(wb, option.series.name + data[0][0] + ".xlsx");
               }
             }
           }
@@ -141,21 +145,10 @@ export default {
       };
       myChart.showLoading();
     },
-    exportExcel() {
-      for (let i = 0; i < option.series.data.length; i++) {
-        let time = option.series.data[i][0]
-        let data = option.series.data[i][1]
-        //export time & data to excel
-        console.log(time, data)
-      }
-
-    },
     handleIdChange(value) {
-      console.log(value)
       this.id = value
     },
     handleParaChange(value) {
-      console.log(value, option)
       this.parameter = value
     },
     handleTimeRangeChange(value) {
@@ -184,7 +177,6 @@ export default {
         this.startTime = new Date().getTime() - 24 * 3600 * 1000
         this.endTime = new Date().getTime()
       }
-      console.log(value, this.startTime, this.endTime)
     },
     disabledSelectedDate(time) {
       return time.valueOf() > Date.now().valueOf()
@@ -198,7 +190,6 @@ export default {
       let end = new Date(endTime).getTime()
       this.startTime = start
       this.endTime = end
-      console.log(this.startTime, this.endTime)
     },
     removeKeyFromObjectAndSaveToArr(obj) {
       let arr = [];
@@ -213,7 +204,6 @@ export default {
       if (this.running === false) {
         return
       }
-      console.log(this.dynamic)
       if (this.dynamic) {
         let types = this.$store.getters.getParaTypes
         this.$store.dispatch('getDeviceDataById', this.id).then(res => {
@@ -226,7 +216,6 @@ export default {
           let tempTime = new Date(res.time)
           let time = tempTime.getFullYear() + '-' + (tempTime.getMonth() + 1) + '-' + tempTime.getDate() + ' ' + tempTime.getHours() + ':' + tempTime.getMinutes() + ':' + tempTime.getSeconds()
           for (let i = 0; i < types.length; i++) {
-            console.log(res, this.tempData, this.Xtime)
             this.tempData[types[i]]['data'].push([time, res[types[i]]])
           }
           this.Xtime.push(time)
@@ -234,7 +223,6 @@ export default {
           // option.series = this.removeKeyFromObjectAndSaveToArr(this.tempData) //全部数据
           option.series = this.tempData[this.parameter];//某个参数数据
           option.xAxis.data = this.Xtime
-          console.log(option)
           option && myChart.setOption(option);
           myChart.hideLoading()
         }).catch(err => {
@@ -256,7 +244,6 @@ export default {
           endTime: this.endTime,
         }
         this.$store.dispatch('getDeviceDataHistoryByDate', data).then(res => {
-          console.log(res)
           for (let tempD in res) {
             let temp = res[tempD]
             let tempTime = new Date(temp.time * 1000)
@@ -266,7 +253,6 @@ export default {
           }
           option.series = this.tempData[this.parameter];//某个参数数据
           option.xAxis.data = this.Xtime
-          console.log(option)
           option && myChart.setOption(option);
           myChart.hideLoading()
 
