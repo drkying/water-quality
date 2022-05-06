@@ -123,9 +123,6 @@ export default {
     deviceData() {
       return this.$store.state.deviceData;
     },
-    isHome() {
-      return this.$route.path.includes("/home");
-    },
     showingDevices() {
       if (this.devices.length === 0)
         return;
@@ -158,6 +155,10 @@ export default {
         return res;
       }
     }
+  },
+  beforeCreate() {
+    //document.querySelector('body').setAttribute('style', 'background-color: #303382;')
+    document.body.style.backgroundColor = "#303382";
   }
 }
 </script>

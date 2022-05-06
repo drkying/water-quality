@@ -1,15 +1,18 @@
 <template>
   <div class="access_code">
-    <h1>在 线 水 质 监 测 预 警 系 统</h1>
-    <a-input-password aria-placeholder="请输入授权码"
-                      v-model="accesscode"
-                      :value="accesscode"
-                      @keyup.enter="doLogin"
-                      style="width: 300px;"
-    ></a-input-password>
-    <p>code is: {{ accesscode }}</p>
-    <br/>
-    <a-button @click="doLogin">确定</a-button>
+    <div class="login_box">
+      <h1>在 线 水 质 监 测 预 警 系 统</h1>
+      <a-input-password aria-placeholder="请输入授权码"
+                        v-model="accesscode"
+                        :value="accesscode"
+                        @keyup.enter="doLogin"
+                        style="width: 300px;"
+      ></a-input-password>
+      <br/>
+      <br/>
+      <br/>
+      <a-button @click="doLogin">确定</a-button>
+    </div>
   </div>
 </template>
 
@@ -23,12 +26,6 @@ export default  {
   },
   methods: {
     doLogin () {
-      // if (this.accesscode === '123') {
-      //   this.$store.commit('setIsLogin',true)
-      //   this.$router.push('/home')
-      // } else {
-      //   this.$message.error('授权码错误')
-      // }
       this.$store.dispatch("checkCode", this.accesscode).then(res => {
         if (res.success) {
           this.$store.commit('setIsLogin', true)
@@ -48,6 +45,9 @@ export default  {
         this.$message.error(err)
       })
     }
+  },
+  beforeCreate() {
+    document.body.style.backgroundColor = '#FFFFFF'
   }
 }
 </script>
@@ -56,11 +56,26 @@ export default  {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 60%;
+  width: 100%;
+  height: 100%;
   flex-direction: column;
-  /*background: url(../assets/login-back.jpg)*/
-  background: white;
+  padding: 200px;
+  background: url('../assets/login.jpg');
+  position: fixed;
+  background-size: 100% 100%;
+}
+
+.login_box {
   padding: 50px;
+  background: rgba(0, 0, 0, .5);
+  /*背景颜色为黑色，透明度为0.8*/
+  box-sizing: border-box;
+  /*box-sizing设置盒子模型的解析模式为怪异盒模型，
+  将border和padding划归到width范围内*/
+  box-shadow: 0px 15px 25px rgba(0, 0, 0, .5);
+  /*边框阴影  水平阴影0 垂直阴影15px 模糊25px 颜色黑色透明度0.5*/
+  border-radius: 15px;
+  /*边框圆角，四个角均为15px*/
 }
 
 h1 {
