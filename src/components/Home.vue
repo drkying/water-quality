@@ -4,11 +4,11 @@
     <div class="content-bottom">
 
       <div class="main-left">
-        <div class="toggel-box">
-          <div class="toggel" @click="toggle(0)">主页</div>
-          <div class="toggel" @click="toggle(1)">设备地图</div>
-          <div class="toggel" @click="toggle(2)">设备管理</div>
-          <div class="toggel" @click="toggle(3)">数据管理</div>
+        <div class="toggle-box">
+          <div class="toggle" :class="isActiveToggle(0)" @click="toggle(0)">主页</div>
+          <div class="toggle" :class="isActiveToggle(1)" @click="toggle(1)">设备地图</div>
+          <div class="toggle" :class="isActiveToggle(2)" @click="toggle(2)">设备管理</div>
+          <div class="toggle" :class="isActiveToggle(3)" @click="toggle(3)">数据管理</div>
         </div>
         <div class="wrap">
           <div class="title">
@@ -24,7 +24,9 @@
               <div class="small-text">{{ device.name }}</div>
             </div>
           </div>
+
         </div>
+
 
       </div>
       <div class="main-right" v-if="isShow===0">
@@ -53,7 +55,7 @@
       </div>
 
       <div class="main-right" v-else-if="isShow===1">
-        <mapTab class="right-bottom"/>
+        <mapTab ref="mapTab" class="right-bottom"/>
       </div>
       <div class="main-right" v-else-if="isShow===2">
         <device-manage/>
@@ -101,7 +103,8 @@ export default {
       return false;
     },
     changeHomeView(index) {
-      this.$refs.mapHome.changeMapCenter(this.devices[index]);
+      if (this.isShow === 0) this.$refs.mapHome.changeMapCenter(this.devices[index]);
+      else if (this.isShow === 1) this.$refs.mapTab.changeMapCenter(this.devices[index]);
       if (this.dataInArr(this.HomeData, index))
         return;
       let temp = [];
@@ -114,7 +117,6 @@ export default {
     toggle(v) {
       this.isShow = v;
     },
-
   },
   computed: {
     devices() {
@@ -154,7 +156,16 @@ export default {
         }
         return res;
       }
-    }
+    },
+    isActiveToggle() {
+      return function (v) {
+        if (this.isShow === v)
+          return "active_toggle";
+        else
+          return "unactive_toggle";
+      }
+
+    },
   },
   beforeCreate() {
     //document.querySelector('body').setAttribute('style', 'background-color: #303382;')
@@ -256,12 +267,38 @@ div {
   transform: scale(0.8);
 }
 
-.toggel-box {
+.toggle-box {
   margin-top: 15px;
   width: 100%;
 }
 
-.toggel {
+.toggle {
+  width: 100%;
+  border-radius: 3px;
+  /*background-color: #ccc;*/
+  /*color: #303382;*/
+  margin-bottom: 10px;
+  padding: 5px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.active_toggle {
+  background-color: #1BA46E;
+  color: #fff;
+  width: 100%;
+  border-radius: 3px;
+  margin-bottom: 10px;
+  padding: 5px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.unactive_toggle {
   width: 100%;
   border-radius: 3px;
   background-color: #ccc;
@@ -282,6 +319,7 @@ div {
   background-color: #3c3e3d;
   padding: 5px 8px;
   color: #fff;
+  height: 800px;
 }
 
 .right-bottom {

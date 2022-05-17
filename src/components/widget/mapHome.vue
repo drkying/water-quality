@@ -60,6 +60,7 @@ export default {
       });
     },
     changeMapCenter(device) {
+      console.log('home chang map')
       this.$refs.mapHome.$map.setCenter([device.posx, device.posy]);
     },
   },

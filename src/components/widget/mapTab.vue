@@ -84,6 +84,7 @@ export default {
       this.$refs.info_window.open();
     },
     changeMapCenter(device) {
+      console.log('tab chang map')
       this.$refs.mapTab.$map.setCenter([device.posx, device.posy]);
       // .setCenter([device.posx, device.posy]);
     },

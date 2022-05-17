@@ -16,10 +16,10 @@ Vue.use(VueAxios, axios).use(Antd).use(AmapVue)
 Vue.config.productionTip = false
 
 //路由守卫 开发时禁用
-// router.beforeEach((to, from, next) => {
-//     if (to.path !== '/login' && !store.state.isLogin) next({path: '/login'})
-//     else next()
-// })
+router.beforeEach((to, from, next) => {
+    if (to.path !== '/login' && !store.state.isLogin) next({path: '/login'})
+    else next()
+})
 
 
 axios.defaults.baseURL = store.getters.getDomain
