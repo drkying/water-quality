@@ -425,17 +425,6 @@ export default {
         else
           this.$message.error(err)
       })
-      //
-      // ins.get('/sendsms', {
-      //   params: {
-      //     phone: '18685414361',
-      //     deviceid: this.id,
-      //     paramtype: this.type,
-      //     now_value: this.deviceData[this.type],
-      //   }
-      // })
-      // }
-      // )
     }
   },
   created() {

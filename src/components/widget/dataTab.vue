@@ -191,6 +191,12 @@ export default {
       this.startTime = start
       this.endTime = end
     },
+    sortArrByTime(A) {
+      A.sort(function (a, b) {
+        return b.time - a.time;
+      })
+      return A;
+    },
     removeKeyFromObjectAndSaveToArr(obj) {
       let arr = [];
       for (let key in obj) {
@@ -226,6 +232,7 @@ export default {
           option && myChart.setOption(option);
           myChart.hideLoading()
         }).catch(err => {
+          this.initTempData()
           console.log(err)
         })
       } else {
@@ -244,6 +251,7 @@ export default {
           endTime: this.endTime,
         }
         this.$store.dispatch('getDeviceDataHistoryByDate', data).then(res => {
+          res = this.sortArrByTime(res)
           for (let tempD in res) {
             let temp = res[tempD]
             let tempTime = new Date(temp.time * 1000)
@@ -256,8 +264,8 @@ export default {
           option && myChart.setOption(option);
           myChart.hideLoading()
 
-
         }).catch(err => {
+          this.initTempData()
           console.log(err)
         })
       }

@@ -100,23 +100,59 @@ export default {
   created() {
     this.timer = setInterval(() => {
       this.$store.dispatch('getDeviceDataHistory', this.deviceId).then(res => {
+        let max1 = 0;
+
         for (let i = 0; i < res.length; i++) {
           let tempTime = new Date(res[i].time * 1000);
           this.tempData.push({
             //value: [new Date(tempTime), res[i].zd]
             value: [tempTime.getFullYear() + '-' + (tempTime.getMonth() + 1) + '-' + tempTime.getDate() + ' ' + tempTime.getHours() + ':' + tempTime.getMinutes() + ':' + tempTime.getSeconds(), res[i][this.type]]
           });
+
+          if (max1 < res[i][this.type]) {
+            max1 = res[i][this.type];
+          }
+
         }
         //console.log(this.unique(this.tempData, "value"));
         this.tempData = this.unique(this.tempData, "value")
-        myChart.setOption({
-          series: [
-            {
-              data: this.tempData,
-              smooth: true
+
+
+        let markLineData = 0;
+        let devices = this.$store.getters.getDevices;
+        for (let i = 0; i < devices.length; i++) {
+          if (devices[i].id === this.deviceId) {
+            if (this.type !== '_do') {
+              markLineData = devices[i]['th_' + this.type]
+            } else {
+              markLineData = devices[i]['th' + this.type]
             }
-          ]
-        });
+          }
+        }
+        if (max1 < markLineData) {
+          max1 = markLineData;
+          option.yAxis.max = max1;
+        }
+
+        option.series = [
+          {
+            data: this.tempData,
+            smooth: true,
+            markLine: {
+              silent: true,
+              label: {
+                formatter: '阈值'
+              },
+              data: [
+                {
+                  yAxis: markLineData
+                }
+              ]
+            }
+          },
+        ];
+
+        myChart.setOption(option);
       });
     }, 1000);
   },

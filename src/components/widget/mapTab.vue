@@ -34,7 +34,8 @@
           <div v-if="activeDevice" style="background: #1BA46E">
             <a-descriptions bordered title="设备信息">
 
-              <a-descriptions-item v-for="(value,key) in activeDevice" :key="key" :label="key">{{ value }}
+              <a-descriptions-item v-for="(value,key) in keyDescriptions" :key="key" :label="value">
+                {{ activeDevice[key] }}
               </a-descriptions-item>
 
 
@@ -58,6 +59,30 @@ export default {
       pitch: 45,
       rotation: 15,
       activeDevice: null,
+      keyDescriptions: {
+        'id': '设备ID',
+        'name': '设备名称',
+        'posx': '经度',
+        'posy': '纬度',
+        'alerted': '是否报警',
+        'belongs': '所属企业',
+        'place': '地点',
+
+        'th_dom': '溶解有机物阈值',
+        'th_zd': '浊度阈值',
+        'th_yl': '叶绿素阈值',
+        'th_cod': '化学需氧量阈值',
+        'th_toc': '总有机碳阈值',
+        'th_tds': '总溶解性固体物质阈值',
+        'th_tem1': '水温阈值',
+        'th_ph': 'PH酸碱度阈值',
+        'th_an': '氨氮阈值',
+        'th_do': '溶解氧阈值',
+        'th_sw': '温湿度阈值',
+        'th_dd': '电导率阈值',
+        'th_odf': '油膜厚度阈值',
+        'paramsAlerted': '报警的参数',
+      },
       markerWarn: {
         image: markerWarn,
         imageSize: [32, 32],
