@@ -189,4 +189,23 @@ const device = {
         })
     },
 }
-export default {...device, ...data}
+const sms = {
+    getWarn() {
+        let ins = axios.create({
+            baseURL: '/sms'
+        })
+        return new Promise((resolve, reject) => {
+            ins.get("/getwarn").then(response => {
+                if (response.status === 200) {
+                    resolve(response.data.data)
+                } else {
+                    reject(response.data.data)
+                }
+                return response.data.data
+            }).catch(error => {
+                reject(error)
+            });
+        })
+    }
+}
+export default {...device, ...data, ...sms}

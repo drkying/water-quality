@@ -384,7 +384,7 @@ export default {
       return new Promise((resolve, reject) => {
         ins.get('/sendsms', {
           params: {
-            phone: '18685414361',
+            phone: '19965665923',
             deviceid: this.id,
             paramtype: this.type,
             now_value: this.deviceData[this.type],
@@ -403,7 +403,7 @@ export default {
       new Promise((resolve, reject) => {
         ins.get('/sendsms', {
           params: {
-            phone: '18685414361',
+            phone: '19965665923',
             deviceid: this.id,
             paramtype: this.type,
             now_value: this.deviceData[this.type],

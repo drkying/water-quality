@@ -13,6 +13,7 @@ module.exports = {
       },
       '/sms': {
         target: 'http://146.56.171.243:5000',
+        //target: 'http://127.0.0.1:5000',
         changeOrigin: true,
         ws: true,
         pathRewrite: {

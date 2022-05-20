@@ -2,6 +2,14 @@
   <div class="access_code">
     <div class="login_box">
       <h1>在 线 水 质 监 测 预 警 系 统</h1>
+      <a>公司名：</a>
+      <a-input style="width: 300px;"
+               v-model="name"
+               :value="name"
+               @keyup.enter="doLogin"></a-input>
+      <br/>
+      <br/>
+      <a>授权码：</a>
       <a-input-password aria-placeholder="请输入授权码"
                         v-model="accesscode"
                         :value="accesscode"
@@ -20,6 +28,7 @@
 export default  {
   data () {
     return {
+      name: '',
       accesscode: '',
       message: '',
     }
@@ -28,16 +37,20 @@ export default  {
     doLogin () {
       this.$store.dispatch("checkCode", this.accesscode).then(res => {
         if (res.success) {
-          this.$store.commit('setIsLogin', true)
-          this.$store.commit('setFilter', res.message)
-          this.$store.dispatch("getDevice").then(() => {
-            this.$store.dispatch("getAllDeviceData").then(() => {
-              this.$store.commit("setIsReady", true)
-              this.$message.success('登录成功')
-              this.$message.success('可查看的设备范围为：' + this.$store.getters.getFilter)
-              this.$router.push('/home')
-            });
-          })
+          if (res.message === this.name) {
+            this.$store.commit('setIsLogin', true)
+            this.$store.commit('setFilter', res.message)
+            this.$store.dispatch("getDevice").then(() => {
+              this.$store.dispatch("getAllDeviceData").then(() => {
+                this.$store.commit("setIsReady", true)
+                this.$message.success('登录成功')
+                this.$message.success('可查看的设备范围为：' + this.$store.getters.getFilter)
+                this.$router.push('/home')
+              });
+            })
+          } else {
+            this.$message.error('公司名或授权码错误')
+          }
         } else {
           this.$message.error(res.message)
         }

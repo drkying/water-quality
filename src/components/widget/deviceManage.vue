@@ -21,6 +21,14 @@
           <a-button @click="handleShowImage(recordName)">查看设备图片</a-button>
         </template>
       </a-table-column>
+      <a-table-column title="短信通知开关" data-index="sms_switch">
+        <template slot-scope="text,recordName">
+          <a-switch
+              :checked="warnStatus[recordName['id']]"
+              @change="smsSwitch($event,recordName['id'])"
+          ></a-switch>
+        </template>
+      </a-table-column>
 
 
       <template v-slot:expandedRowRender="record">
@@ -54,6 +62,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "tableT",
   data() {
@@ -68,6 +78,7 @@ export default {
       paraTypes: this.$store.getters.getParaTypes,
       describe: this.$store.getters.getParaDescribe,
       lastImage: {},
+      warnStatus: {}
     }
   },
   computed: {
@@ -145,6 +156,74 @@ export default {
     },
   },
   methods: {
+    getWarnStatus() {
+      let devices = this.$store.getters.getDevices
+      let ins = axios.create({
+        baseURL: '/sms'
+      })
+      for (let i = 0; i < devices.length; i++) {
+        let id = devices[i].id
+        new Promise((resolve, reject) => {
+          ins.get('/getwarnstatus', {
+            params: {
+              deviceid: id
+            }
+          }).then(res => {
+            resolve(res)
+          }).catch(err => {
+            reject(err)
+          })
+        }).then(res => {
+          this.warnStatus[id] = res.data.data;
+        }).catch(err => {
+          console.log(err)
+        })
+      }
+    },
+    smsSwitch(checked, id) {
+      console.log(checked)
+      console.log(id)
+      let ins = axios.create({
+        baseURL: '/sms'
+      })
+      if (checked === true) {
+        new Promise((resolve, reject) => {
+          ins.get('/openwarn', {
+            params: {
+              deviceid: id
+            }
+          }).then(res => {
+            resolve(res)
+          }).catch(err => {
+            reject(err)
+          })
+        }).then(res => {
+          console.log(res)
+          this.updateData();
+          this.$message.success(res.data.message)
+        }).catch(err => {
+          console.log(err)
+        })
+      } else if (checked === false) {
+        new Promise((resolve, reject) => {
+          ins.get('/closewarn', {
+            params: {
+              deviceid: id
+            }
+          }).then(res => {
+            resolve(res)
+          }).catch(err => {
+            reject(err)
+          })
+        }).then(res => {
+          console.log(res)
+          this.updateData();
+          this.$message.success(res.data.message)
+        }).catch(err => {
+          console.log(err)
+        })
+      }
+    },
     handleEditName(scope) {
       this.modalTitle = '修改设备名称'
       this.modalHint = '请输入新的设备名称'
@@ -174,7 +253,7 @@ export default {
           this.confirmLoading = false;
           this.$message.success('修改成功' + this.editingId + ',' + this.modalValue);
           this.modalValue = ''
-          this.updateData(data)
+          this.updateData()
         }).catch(() => {
           this.visible = '';
           this.confirmLoading = false;
@@ -193,7 +272,7 @@ export default {
           this.confirmLoading = false;
           this.$message.success('修改成功' + this.editingId + ',' + this.editingType + ',' + this.modalValue)
           this.modalValue = ''
-          this.updateData(data)
+          this.updateData()
         }).catch(() => {
           this.visible = '';
           this.confirmLoading = false;
@@ -207,9 +286,9 @@ export default {
       this.visible = ''
       this.modalValue = ''
     },
-    updateData(data) {
+    updateData() {
       //let index =
-      console.log(this.data.map(item => item).indexOf(data.id))
+      //console.log(this.data.map(item => item).indexOf(data.id))
       // if (data.type) {
       //   this.data[index].nestedData[this.data[index].nestedData.map(item => item.name).indexOf(data.type)].value = data.value
       // } else if (data.name) {
@@ -220,6 +299,7 @@ export default {
           this.$store.commit("setIsReady", true)
         });
       })
+      this.getWarnStatus()
     },
     handleShowImage(scope) {
       this.getImage(scope.id)
@@ -261,6 +341,9 @@ export default {
       })
     }
   },
+  created() {
+    this.updateData()
+  }
 }
 </script>
 
@@ -272,7 +355,6 @@ a-table {
 
 .tttt {
   margin-top: 20px;
-
   background: white;
 }
 </style>

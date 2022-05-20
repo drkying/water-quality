@@ -55,7 +55,6 @@
       </div>
     </div>
     <div id="main" style="height: 600px;background: white;"></div>
-
   </div>
 </template>
 

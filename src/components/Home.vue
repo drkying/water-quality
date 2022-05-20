@@ -9,6 +9,7 @@
           <div class="toggle" :class="isActiveToggle(1)" @click="toggle(1)">设备地图</div>
           <div class="toggle" :class="isActiveToggle(2)" @click="toggle(2)">设备管理</div>
           <div class="toggle" :class="isActiveToggle(3)" @click="toggle(3)">数据管理</div>
+          <div class="toggle" :class="isActiveToggle(4)" @click="toggle(4)">报警记录</div>
         </div>
         <div class="wrap">
           <div class="title">
@@ -63,6 +64,9 @@
       <div class="main-right" v-else-if="isShow===3">
         <data-tab class="right-bottom"/>
       </div>
+      <div class="main-right" v-else-if="isShow===4">
+        <warn-tab class="right-bottom"/>
+      </div>
     </div>
   </div>
 </template>
@@ -75,6 +79,7 @@ import mapHome from "@/components/widget/mapHome";
 import DeviceManage from "@/components/widget/deviceManage";
 import mapTab from "@/components/widget/mapTab";
 import DataTab from "@/components/widget/dataTab";
+import WarnTab from "@/components/widget/warnTab";
 
 export default {
   name: "Home",
@@ -85,6 +90,7 @@ export default {
     };
   },
   components: {
+    WarnTab,
     DataTab,
     DeviceManage,
     DevicesStatus,
